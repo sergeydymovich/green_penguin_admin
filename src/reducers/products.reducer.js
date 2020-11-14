@@ -1,7 +1,7 @@
 import { GET_PRODUCTS } from "../actions/products.actions";
 
 const INITIAL_STATE = {
-	products: [],
+	productsArr: [],
 };
 
 const products = (state = INITIAL_STATE, action) => {
@@ -10,7 +10,7 @@ const products = (state = INITIAL_STATE, action) => {
 	case GET_PRODUCTS:
 		return {
 			...state,
-			products: [...state.products, ...action.payload.products ],
+			productsArr: [...state.productsArr, ...action.payload.products ],
 		};
  		
 	default: 

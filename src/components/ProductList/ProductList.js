@@ -1,13 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import ProductItem from "../ProductItem/ProductItem";
 import styles from "./ProductList.module.css";
-import axios from "../../utils/axios.utils.js";
+import { useSelector } from "react-redux";
 
 function ProductList() {
+	const [products, setProducts] = useState([]);
+	const productsArr = useSelector(state => state.products.productsArr);
 
+	useEffect(() => {
+		setProducts(productsArr)
+		console.log(products)
+	},[productsArr])
 
   return (
     <div className={styles.container}>
-			Товары.....
+			<ul className={styles.list}>
+			{products.map(el => (
+				<ProductItem product={el} />
+			))}
+			</ul>
+			
     </div>
   );
 }
