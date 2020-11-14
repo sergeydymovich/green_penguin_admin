@@ -6,38 +6,45 @@ function ProductForm() {
 
 	const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-
-    const obj = {
-			title: "SDFDSFDSFD",
-			content: "DFDSFDSFDSFDS",
-			image: "" ,
-			category: "18+",
-		};
-
-    axios.POST("/products", obj).then(res => {	
-			console.log(res.data.product);	
-		}).catch((err) =>  {
-			console.log("ошибка:", err.response.data.errorMessage);
-		});
-	},[])
-	
 	const toogleShowForm = () => {
 		setShowForm(!showForm);
 		console.log(showForm)
 	}
-  
-  
+	
+	const submitForm = (e) => {
+		e.preventDefault();
+		const obj = {
+			name: "мыло",
+			volume: "100гр",
+			price: "3p",
+			category: "тест",
+			brand: "Чистая линия"			
+		}
+
+		axios.POST("/products", obj).then(res => {
+
+			console.log(res.data.product)
+	
+		}).catch(error =>  {
+	
+			console.log(error);
+		});
+	}
+
+	
+
+
   return (
     <div className={styles.container}>
 			<button onClick={toogleShowForm}>Добавить товар</button>
-			{showForm && <form className={showForm ?  styles.productForm : styles.containerClick }>
+			{showForm && <form onSubmit={submitForm} className={styles.productForm}>
 				<input type="text" />
 				<input type="text" />
 				<input type="text" />
 				<input type="text" />
 				<input type="text" />
 				<input type="text" />
+				<button>Добавить</button>
 			</form>}
     </div>
   );
