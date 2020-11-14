@@ -4,7 +4,7 @@ import styles from "./ProductItem.module.css";
 
 function ProductItem({ product }) {
   return (
-    <li>
+    <li className={styles.item}>
 			<h4>{product.name}</h4>
 		</li>
   );
