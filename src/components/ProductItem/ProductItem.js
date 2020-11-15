@@ -16,6 +16,7 @@ function ProductItem({ product }) {
   return (
     <li className={styles.item}>
 			<h4>{product.name}</h4>
+			<img src={product.image} alt="product-img" />
 			<button className={styles.deleteBtn} onClick={deleteProduct}>УДАЛИТЬ</button>
 		</li>
   );

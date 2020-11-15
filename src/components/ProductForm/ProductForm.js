@@ -3,13 +3,6 @@ import styles from "./ProductForm.module.css";
 import axios from "../../utils/axios.utils.js";
 
 function ProductForm() {
-
-	const [showForm, setShowForm] = useState(false);
-
-	const toogleShowForm = () => {
-		setShowForm(!showForm);
-		console.log(showForm)
-	}
 	
 	const submitForm = (e) => {
 		e.preventDefault();
@@ -36,16 +29,40 @@ function ProductForm() {
 
   return (
     <div className={styles.container}>
-			<button onClick={toogleShowForm}>Добавить товар</button>
-			{showForm && <form onSubmit={submitForm} className={styles.productForm}>
-				<input type="text" />
-				<input type="text" />
-				<input type="text" />
-				<input type="text" />
-				<input type="text" />
-				<input type="text" />
+				<form onSubmit={submitForm} className={styles.productForm}>
+				<label>
+					<p>Название:</p>
+					<input type="text" />
+				</label>
+				<label>
+					<p>Бренд:</p>
+					<input type="text" />
+				</label>
+				<label>
+					<p>Объем:</p>
+					<input type="text" />
+				</label>
+				<label>
+					<p>Вес:</p>
+					<input type="text" />
+				</label>
+				<label>
+					<p>Цена:</p>
+					<input type="text" />
+				</label>
+				<label>
+					<p>Изображение:</p>
+					<input type="file" />
+				</label>
+				<label>
+					<p>Категория:</p>
+					<select>
+						<option>1</option>
+						<option>2</option>
+					</select>
+				</label>			
 				<button>Добавить</button>
-			</form>}
+			</form>
     </div>
   );
 }
