@@ -1,5 +1,5 @@
 .item {
-	padding: 10px;
+	padding: 10px 0px;
 	border: 1px solid #5f9e52;
 	margin-bottom: 10px;
 	display: flex;
@@ -36,4 +36,9 @@
 
 .brand, .volume, .price {
 	width: 33%;
+}
+
+.link {
+	text-decoration: none;
+	color: black;
 }

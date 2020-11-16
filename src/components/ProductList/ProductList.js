@@ -15,8 +15,8 @@ function ProductList() {
   return (
     <div className={styles.container}>
 			<ul className={styles.list}>
-			{products.map(el => (
-				<ProductItem product={el} />
+			{products.map(product => (
+				<ProductItem product={product} />
 			))}
 			</ul>
 			

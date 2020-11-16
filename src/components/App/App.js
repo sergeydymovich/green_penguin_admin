@@ -2,11 +2,18 @@ import React, { useEffect } from 'react';
 import Header from "../Header/Header";
 import ProductForm from "../ProductForm/ProductForm";
 import ProductList from "../ProductList/ProductList";
+import ProductContainer from "../Product/ProductContainer";
 import styles from "./App.module.css";
 import axios from "../../utils/axios.utils.js";
 import { getProducts } from '../../actions/products.actions';
 import { useDispatch } from 'react-redux';
 import { getCategories } from '../../actions/categories.actions';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+} from "react-router-dom";
 
 function App() {
 const dispatch = useDispatch();
@@ -28,11 +35,19 @@ const dispatch = useDispatch();
 	
  
   return (
-    <div className={styles.App}>
+		<Router>
+			<div className={styles.App}>
       <Header/>
-			<ProductForm/>
-			<ProductList/>
+			<Switch>
+				<Route exact path="/" component={ProductList} />
+				<Route path="/product/:id" component={ProductContainer} />
+				{/* <ProductForm/> */}
+			</Switch>
+			
+			
     </div>
+		</Router>
+    
   );
 }
 
