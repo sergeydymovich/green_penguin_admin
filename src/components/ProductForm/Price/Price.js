@@ -5,7 +5,6 @@ function Price({ changePrice, price }) {
 
 	const handlePrice = (e) => {
 		const price = validatePrice(e.target.value);
-		console.log(price)
 		changePrice(price);
 	}
 

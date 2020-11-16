@@ -15,9 +15,21 @@ function ProductItem({ product }) {
 
   return (
     <li className={styles.item}>
-			<h4>{product.name}</h4>
-			<img src={product.image} alt="product-img" />
-			<button className={styles.deleteBtn} onClick={deleteProduct}>УДАЛИТЬ</button>
+			<div className={styles.imageContainer}>
+				<img className={styles.image} src={product.image} alt="product-img" />
+			</div>
+			<div className={styles.nameContainer}>
+				<h4>{product.name}</h4>
+			</div>
+			<div className={styles.otherInfoContainer}>
+				<p className={styles.brand}>{product.brand}</p>			
+				<p className={styles.volume}>{product.volume || product.weight}{product.volume ? "мл": "гр"}</p>
+				<p className={styles.price}>{product.price} BYN/шт</p>
+			</div>	
+			<div className={styles.buttonContainer}>
+				<button className={styles.deleteBtn} onClick={deleteProduct}>УДАЛИТЬ</button>
+			</div>
+			
 		</li>
   );
 }

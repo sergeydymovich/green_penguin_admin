@@ -1,9 +1,39 @@
 .item {
 	padding: 10px;
-	border: 1px solid black;
+	border: 1px solid #5f9e52;
 	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
 
-.deleteBtn {
-	
+.image {
+	height: 50px;
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: center;
+	width: 10%;
+}
+
+.nameContainer {
+	width: 40%;
+}
+
+.otherInfoContainer {
+	width: 40%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.buttonContainer {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+}
+
+.brand, .volume, .price {
+	width: 33%;
 }

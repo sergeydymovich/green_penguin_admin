@@ -21,6 +21,7 @@ function ProductForm() {
 	const [image, setImage] = useState("");
 	const [description, setDescription] = useState("");
 	const [error, setError] = useState(false);
+	const [succes, setSucces] = useState(false);
 	
 	const submitForm = (e) => {
 		e.preventDefault();
@@ -37,9 +38,9 @@ function ProductForm() {
 		}
 
 		axios.POST("/products", obj).then(res => {
-			console.log(res.data.product)
+			setSucces(true);
 		}).catch(error =>  {
-			console.log(error);
+			setError(true);
 		});
 	}
 
@@ -65,6 +66,8 @@ function ProductForm() {
 						<Description changeDescription={setDescription} />
 					</div>
 					<button>Добавить</button>
+					{succes &&<p className={styles.succes}>Товар успешно добавлен!</p>}
+					{error &&<p className={styles.error}>Заполните все обязательные поля!</p>}
 			</form>
     </div>
   );
