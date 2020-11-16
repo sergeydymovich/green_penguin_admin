@@ -1,0 +1,23 @@
+.image {
+	max-width: 300px;
+	max-height: 500px;
+}
+
+.content {
+	display: flex;
+}
+
+.product {
+	padding: 50px;
+}
+
+.info {
+	padding: 30px;
+}
+
+.brand,
+.volume,
+.price,
+.description {
+	margin-bottom: 10px;
+}

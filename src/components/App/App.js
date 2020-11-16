@@ -12,7 +12,6 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Redirect,
 } from "react-router-dom";
 
 function App() {
@@ -41,10 +40,8 @@ const dispatch = useDispatch();
 			<Switch>
 				<Route exact path="/" component={ProductList} />
 				<Route path="/product/:id" component={ProductContainer} />
-				{/* <ProductForm/> */}
-			</Switch>
-			
-			
+				<Route path="/form" component={ProductForm} />
+			</Switch>	
     </div>
 		</Router>
     
