@@ -1,13 +1,21 @@
 import React  from 'react';
+import { validatePrice } from "../../../utils/string.utils";
 
-function Price({ changePrice }) {
+function Price({ changePrice, price }) {
+
+	const handlePrice = (e) => {
+		const price = validatePrice(e.target.value);
+		console.log(price)
+		changePrice(price);
+	}
 
   return (
 		<label>
-							<p>Цена:</p>
-							<input 
+							<p>Цена(BYN):</p>
+							<input
+								value={price} 
 								type="text" 
-								onChange={(e) => changePrice(e.target.value)} 
+								onChange={handlePrice} 
 							/>
 		</label>
   );

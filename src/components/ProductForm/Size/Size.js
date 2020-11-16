@@ -1,27 +1,38 @@
 import React  from 'react';
+import Price from '../Price/Price';
+import { validateNumber } from "../../../utils/string.utils";
 
-function Size({changeVolume, changeWeight}) {
+function Size({changeVolume, changeWeight, volume, weight}) {
+
+	const validateVolume = (e) => {
+		const volume = validateNumber(e.target.value);
+		changeVolume(volume);
+	}
+	const validateWeight = (e) => {
+		const weight = validateNumber(e.target.value);
+		changeWeight(weight);
+	}
 
   return (
 		<>
 			<label>
-				<p>Объем:</p>
-				<input 
+				<p>Объем(в мл):</p>
+				<input
+					value={volume} 
 					type="text"
-					onChange={(e) => changeVolume(e.target.value)}
+					onChange={validateVolume}
+					disabled={weight}
 				/>
-				<input type="radio" value="l" name="volume" /> l
-				<input type="radio" value="ml" name="volume" /> ml
 			</label>
 			<label>
-				<p>Вес:</p>
-				<input 
+				<p>Вес(в граммах):</p>
+				<input
+					value={weight} 
 					type="text" 
-					onChange={(e) => changeWeight(e.target.value)} 
+					onChange={validateWeight} 
+					disabled={volume}
 				/>
-				<input type="radio" value="mg" name="weight" /> mg
-				<input type="radio" value="g" name="weight" /> g
-				<input type="radio" value="kg" name="weight" /> kg
+
 			</label>
 		</>
   );

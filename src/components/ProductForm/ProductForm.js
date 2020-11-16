@@ -11,7 +11,6 @@ import Description from "./Description/Description";
 
 function ProductForm() {
 
-
 	const [name, setName] = useState("");
 	const [brand, setBrand] = useState("");
 	const [volume, setVolume] = useState("");
@@ -21,9 +20,8 @@ function ProductForm() {
 	const [subCategory, setSubCategory] = useState("");
 	const [image, setImage] = useState("");
 	const [description, setDescription] = useState("");
+	const [error, setError] = useState(false);
 	
-
-
 	const submitForm = (e) => {
 		e.preventDefault();
 		const obj = {
@@ -45,16 +43,20 @@ function ProductForm() {
 		});
 	}
 
-
   return (
     <div className={styles.container}>
 				<form onSubmit={submitForm} className={styles.productForm}>
 					<div className={styles.basicInfoContainer}>
 						<Name changeName={setName} />
 						<Brand changeBrand={setBrand} />
-						<Size changeVolume={setVolume} changeWeight={setWeight} />
+						<Size 
+						changeVolume={setVolume}
+						changeWeight={setWeight}
+						volume={volume}
+						weight={weight}
+						/>
 						<Category changeCategory={setCategory} changeSubCategory={setSubCategory} category={category} />
-						<Price changePrice={setPrice} />
+						<Price changePrice={setPrice} price={price} />
 					</div>
 					<div className={styles.image}>
 						<Image changeImage={setImage} />
