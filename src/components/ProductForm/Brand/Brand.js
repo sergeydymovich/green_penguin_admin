@@ -1,11 +1,12 @@
 import React  from 'react';
 
-function Brand({changeBrand}) {
+function Brand({changeBrand, brand}) {
 
   return (
     <label>
 			<p>Бренд:</p>
-			<input 
+			<input
+				value={brand} 
 				type="text"
 				onChange={(e) => changeBrand(e.target.value)}
 			/>

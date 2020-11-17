@@ -22,7 +22,7 @@ function Product({ product }) {
 							product, 
 						}
 					}}>
-						<button>Редактировать товар</button>
+						{!product.isPreview && <button className={styles.btn}>Редактировать товар</button>}
 					</Link>						
 				</div>		
 			</div>		
