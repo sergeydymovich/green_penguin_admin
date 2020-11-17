@@ -8,6 +8,7 @@ import Category from "./Category/Category";
 import Price from "./Price/Price";
 import Image from "./Image/Image";
 import Description from "./Description/Description";
+import ProductPreview from "../Product/Product";
 
 function ProductForm() {
 
@@ -44,10 +45,24 @@ function ProductForm() {
 		});
 	}
 
+	const product = {
+		name,
+		volume,
+		weight,
+		price,
+		category,
+		subCategory,
+		brand,			
+		description,
+		image,
+		isPreview: true,			
+	}
+
   return (
-    <div className={styles.container}>
+		<>
+		<div className={styles.container}>
 				<form onSubmit={submitForm} className={styles.productForm}>
-					<div className={styles.basicInfoContainer}>
+					<div className={styles.firstColumn}>
 						<Name changeName={setName} />
 						<Brand changeBrand={setBrand} />
 						<Size 
@@ -56,20 +71,24 @@ function ProductForm() {
 						volume={volume}
 						weight={weight}
 						/>
-						<Category changeCategory={setCategory} changeSubCategory={setSubCategory} category={category} />
+					</div>
+					<div className={styles.secondColumn}>
 						<Price changePrice={setPrice} price={price} />
-					</div>
-					<div className={styles.image}>
+						<Category changeCategory={setCategory} changeSubCategory={setSubCategory} category={category} />			
+					</div>		
+					<div className={styles.thirdColumn}>
 						<Image changeImage={setImage} />
-					</div>
-					<div className={styles.description}>
 						<Description changeDescription={setDescription} />
 					</div>
-					<button>Добавить</button>
-					{succes &&<p className={styles.succes}>Товар успешно добавлен!</p>}
-					{error &&<p className={styles.error}>Заполните все обязательные поля!</p>}
+					<div className={styles.fourthColumn}>
+						<button className={styles.button}>Добавить</button>
+						{succes &&<p className={styles.succes}>Товар успешно добавлен!</p>}
+						{error &&<p className={styles.error}>Заполните все обязательные поля!</p>}
+					</div>			
 			</form>
     </div>
+		<ProductPreview product={product} />
+		</>  
   );
 }
 

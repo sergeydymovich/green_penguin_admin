@@ -10,3 +10,7 @@ body {
 	font-family: 'Roboto', sans-serif; 
 	letter-spacing: normal;
 }
+
+a {
+	text-decoration: none;
+}

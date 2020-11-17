@@ -2,6 +2,7 @@ import React  from 'react';
 import styles from "./ProductItem.module.css";
 import axios from "../../utils/axios.utils.js";
 import { Link } from "react-router-dom";
+import noimg from "../../assets/noimg.svg";
 
 function ProductItem({ product }) {
 
@@ -16,10 +17,9 @@ function ProductItem({ product }) {
 
   return (
 		<Link className={styles.link} to={`/product/${product._id}`} >
-			<li className={styles.item}>
-				
+			<li className={styles.item}>	
 					<div className={styles.imageContainer}>
-						<img className={styles.image} src={product.image} alt="product-img" />
+						<img className={styles.image} src={product.image || noimg} alt="product-img" />
 					</div>
 					<div className={styles.nameContainer}>
 						<h4>{product.name}</h4>

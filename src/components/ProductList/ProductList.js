@@ -15,9 +15,11 @@ function ProductList() {
 
   return (
     <div className={styles.container}>
-			<Link to="/form">
-				<button>Добавить товар</button>
-			</Link>			
+			<div className={styles.btnContainer}>
+				<Link to="/form">
+					<button className={styles.btn}>Добавить товар</button>
+				</Link>	
+			</div>		
 			<ul className={styles.list}>
 			{products.map(product => (
 				<ProductItem product={product} />
