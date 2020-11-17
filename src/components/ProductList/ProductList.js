@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ProductItem from "../ProductItem/ProductItem";
 import styles from "./ProductList.module.css";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function ProductList() {
 	const [products, setProducts] = useState([]);
@@ -14,6 +15,9 @@ function ProductList() {
 
   return (
     <div className={styles.container}>
+			<Link to="/form">
+				<button>Добавить товар</button>
+			</Link>			
 			<ul className={styles.list}>
 			{products.map(product => (
 				<ProductItem product={product} />
