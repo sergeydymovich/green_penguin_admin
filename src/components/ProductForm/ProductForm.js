@@ -84,7 +84,6 @@ function ProductForm() {
 	};
 
 	useEffect(() => {
-		
 		if (location.state) {
 			const { product } = location.state;
 
@@ -136,7 +135,6 @@ function ProductForm() {
 					<div className={styles.thirdColumn}>
 						<Image
 						 changeImage={setImage}
-						 image={image}
 						/>
 						<Description
 						 changeDescription={setDescription}

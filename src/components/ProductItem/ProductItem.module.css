@@ -22,7 +22,7 @@
 }
 
 .otherInfoContainer {
-	width: 40%;
+	width: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -41,4 +41,7 @@
 .link {
 	text-decoration: none;
 	color: black;
+	display: flex;
+	width: 90%;
+	align-items: center;
 }

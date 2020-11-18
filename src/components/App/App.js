@@ -6,7 +6,7 @@ import ProductList from "../ProductList/ProductList";
 import ProductContainer from "../Product/ProductContainer";
 import styles from "./App.module.css";
 import axios from "../../utils/axios.utils.js";
-import { getProducts } from '../../actions/products.actions';
+import { getProducts, getProductsRequest } from '../../actions/products.actions';
 import { useDispatch } from 'react-redux';
 import { getCategories } from '../../actions/categories.actions';
 import {
@@ -19,7 +19,8 @@ function App() {
 const dispatch = useDispatch();
 
 	useEffect(() => {
-
+		dispatch(getProductsRequest());
+		
 		axios.GET("/products").then(res => {	
 			dispatch(getProducts(res.data.products));				
 		}).catch(error =>  {

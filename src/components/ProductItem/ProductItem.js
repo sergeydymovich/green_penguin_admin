@@ -3,21 +3,27 @@ import styles from "./ProductItem.module.css";
 import axios from "../../utils/axios.utils.js";
 import { Link } from "react-router-dom";
 import noimg from "../../assets/noimg.svg";
+import { deleteProduct } from '../../actions/products.actions';
+import { useDispatch } from 'react-redux';
+
 
 function ProductItem({ product }) {
 
-	const deleteProduct = () => {
+	const dispatch = useDispatch();
+
+	const handleDelete = () => {
 
 		axios.DELETE("/products", { id: product._id }).then(() => {
-			
+			dispatch(deleteProduct(product._id));
 		}).catch(error =>  {
 			console.log(error);
 		});
 	}
 
   return (
-		<Link className={styles.link} to={`/product/${product._id}`} >
-			<li className={styles.item}>	
+		
+			<li className={styles.item}>
+				<Link className={styles.link} to={`/product/${product._id}`} >
 					<div className={styles.imageContainer}>
 						<img className={styles.image} src={product.image || noimg} alt="product-img" />
 					</div>
@@ -28,12 +34,12 @@ function ProductItem({ product }) {
 						<p className={styles.brand}>{product.brand}</p>			
 						<p className={styles.volume}>{product.volume || product.weight}{product.volume ? "мл": "гр"}</p>
 						<p className={styles.price}>{product.price} BYN/шт</p>
-					</div>	
-					<div className={styles.buttonContainer}>
-						<button className={styles.deleteBtn} onClick={deleteProduct}>УДАЛИТЬ</button>
-					</div>			
+					</div>
+				</Link>		
+				<div className={styles.buttonContainer}>
+					<button className={styles.deleteBtn} onClick={handleDelete}>УДАЛИТЬ</button>
+				</div>			
 			</li>
-		</Link>	
   );
 }
 
