@@ -1,11 +1,44 @@
 import React, { useState }  from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./Category.module.css";
+import { isExist, isExistValue } from "../../../utils/object.utils";
 
 function Category({ changeCategory, changeSubCategory, category, subCategory }) {
 	const categories = useSelector(state => state.categories.categoriesArr);
 	const [isNewCategory, setIsNewCategory] = useState(false);
 	const [isNewSubCategory, setIsNewSubCategory] = useState(false);
+	const [categoryExist, setCategoryExist] = useState(false);
+	const [subCategoryExist, setSubCategoryExist] = useState(false);
+
+	const toogleNewCategory = () => {
+		setIsNewCategory(!isNewCategory);
+		changeCategory("");
+
+	}
+	const toogleNewSubCategory = () => {
+		setIsNewSubCategory(!isNewSubCategory)
+		changeSubCategory("")
+
+	}
+
+	const changeNewCategory = (e) => {
+		changeCategory(e.target.value);
+		setCategoryExist(false);
+		const isValid = isExist(e.target.value, categories);
+		if (isValid) {
+			setCategoryExist(true);
+		}
+	}
+
+	const changeNewSubCategory = (e) => {
+		changeSubCategory(e.target.value);
+		setSubCategoryExist(false);
+		const isValid = isExistValue(e.target.value, category, categories)
+
+		if (category && isValid) {			
+				setSubCategoryExist(true);
+		}
+	}
 
   return (
 		<div className={styles.categories}>
@@ -22,12 +55,12 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					>
 					не выбрана
 					</option>
-					{categories && categories.map((elem, i) => (
+					{categories && !isNewCategory && categories.map((elem, i) => (
 					<option
-					 key={elem._id}
-					 selected={elem.name === category}
+						key={elem._id}
+						selected={elem.name === category}
 					>
-					{elem.name}
+						{elem.name}
 					</option>
 					))}	
 					</select>
@@ -36,7 +69,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					<p>Новая категория?</p>
 					<input 
 						type="checkbox"
-						onChange={() => setIsNewCategory(!isNewCategory)}
+						onChange={toogleNewCategory}
 					/>
 				</label>
 				{isNewCategory &&
@@ -44,8 +77,9 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					<p>Новая категория:</p>
 					<input
 						type="text"
-						onChange={(e) => changeCategory(e.target.value)}
+						onChange={changeNewCategory}
 					/>
+					{categoryExist &&<p className={styles.error}>Уже существует!</p>}
 				</label>
 				}		
 			</div>
@@ -53,7 +87,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 				<label>
 					<p>Подкатегория:</p>
 					<select
-						disabled={isNewSubCategory}
+						disabled={isNewSubCategory || isNewCategory}
 						onChange={(e) => changeSubCategory(e.target.value)}
 					>	
 					<option 
@@ -62,7 +96,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					>
 					не выбрана
 					</option> 
-					{category && categories.find(el => el.name === category).subcategories.map((elem, i) => (
+					{category && !isNewCategory &&  categories.find(el => el.name === category).subcategories.map((elem, i) => (
 						<option
 						 key={i}
 						 selected={elem === subCategory}
@@ -74,9 +108,10 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 				</label>
 				<label>
 					<p>Новая подкатегория?</p>
-					<input 
+					<input
+						disabled={!category}
 						type="checkbox"
-						onChange={() => setIsNewSubCategory(!isNewSubCategory)}
+						onChange={toogleNewSubCategory}
 					/>
 				</label>	
 				{isNewSubCategory &&
@@ -84,8 +119,9 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					<p>Новая подкатегория:</p>
 					<input 
 						type="text"
-						onChange={(e) => changeSubCategory(e.target.value)}
+						onChange={changeNewSubCategory}
 					/>
+					{subCategoryExist &&<p className={styles.error}>Уже существует!</p>}
 				</label>
 				}
 			</div>
