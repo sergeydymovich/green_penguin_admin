@@ -1,0 +1,12 @@
+.categories {
+	display: flex;
+	justify-content: space-between;
+}
+
+.category {
+	width: 50%;
+}
+
+.subCategory {
+	width: 50%;
+}
