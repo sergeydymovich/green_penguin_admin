@@ -21,6 +21,8 @@ function ProductForm() {
 	const [price, setPrice] = useState("");
 	const [category, setCategory] = useState("");
 	const [subCategory, setSubCategory] = useState("");
+	const [isNewCategory, setIsNewCategory] = useState(false);
+	const [isNewSubCategory, setIsNewSubCategory] = useState(false);
 	const [image, setImage] = useState("");
 	const [description, setDescription] = useState("");
 	const [id, setId] = useState("");
@@ -29,17 +31,7 @@ function ProductForm() {
 	
 	const submitAddForm = (e) => {
 		e.preventDefault();
-		const obj = {
-			name,
-			volume,
-			weight,
-			price,
-			category,
-			subCategory,
-			brand,			
-			description,
-			image			
-		}
+		const obj = { name, volume, weight, price, category, subCategory, brand,	description, image }
 
 		axios.POST("/products", obj).then(res => {
 			setSucces(true);
@@ -50,18 +42,7 @@ function ProductForm() {
 
 	const submitChangeForm = (e) => {
 		e.preventDefault();
-		const obj = {
-			name,
-			volume,
-			weight,
-			price,
-			category,
-			subCategory,
-			brand,			
-			description,
-			image,
-			_id: id 		
-		}
+		const obj = { name, volume, weight, price, category, subCategory, brand, description, image, _id: id }
 
 		axios.PUT("/products", obj).then(res => {
 			setSucces(true);
@@ -70,18 +51,7 @@ function ProductForm() {
 		});
 	}
 
-	const product = {
-		name,
-		volume,
-		weight,
-		price,
-		category,
-		subCategory,
-		brand,			
-		description,
-		image,
-		isPreview: true,			
-	};
+	const product = { name, volume, weight, price, category, subCategory, brand, description, image, isPreview: true };
 
 	useEffect(() => {
 		if (location.state) {
@@ -130,6 +100,10 @@ function ProductForm() {
 							changeSubCategory={setSubCategory}
 							category={category}
 							subCategory={subCategory}
+							isNewCategory={isNewCategory}
+							isNewSubCategory={isNewSubCategory}
+							setIsNewCategory={setIsNewCategory}
+							setIsNewSubCategory={setIsNewSubCategory}
 						/>			
 					</div>		
 					<div className={styles.thirdColumn}>
@@ -142,7 +116,12 @@ function ProductForm() {
 						/>
 					</div>
 					<div className={styles.fourthColumn}>
-						<button className={styles.button}>{location.state ? "Изменить" : "Добавить" }</button>
+						<button
+							disabled={!name || (!volume && !weight) || !price || !category || !brand || !description || !image }
+							className={styles.button}
+						>
+							 {location.state ? "Изменить" : "Добавить" }
+						</button>
 						{succes &&<p className={styles.succes}>Товар успешно {location.state ? "изменен!" : "добавлен!" }</p>}
 						{error &&<p className={styles.error}>Неудачно.Заполните все поля!</p>}
 					</div>			

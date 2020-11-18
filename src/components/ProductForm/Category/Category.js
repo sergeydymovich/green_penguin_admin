@@ -3,16 +3,17 @@ import { useSelector } from 'react-redux';
 import styles from "./Category.module.css";
 import { isExist, isExistValue } from "../../../utils/object.utils";
 
-function Category({ changeCategory, changeSubCategory, category, subCategory }) {
+function Category({ changeCategory, changeSubCategory, category, subCategory, isNewCategory, isNewSubCategory, setIsNewCategory, setIsNewSubCategory }) {
+
 	const categories = useSelector(state => state.categories.categoriesArr);
-	const [isNewCategory, setIsNewCategory] = useState(false);
-	const [isNewSubCategory, setIsNewSubCategory] = useState(false);
 	const [categoryExist, setCategoryExist] = useState(false);
 	const [subCategoryExist, setSubCategoryExist] = useState(false);
 
 	const toogleNewCategory = () => {
 		setIsNewCategory(!isNewCategory);
+		setIsNewSubCategory(false);
 		changeCategory("");
+		changeSubCategory("");
 
 	}
 	const toogleNewSubCategory = () => {
@@ -67,7 +68,8 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 				</label>
 				<label>
 					<p>Новая категория?</p>
-					<input 
+					<input
+					  
 						type="checkbox"
 						onChange={toogleNewCategory}
 					/>
@@ -96,7 +98,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 					>
 					не выбрана
 					</option> 
-					{category && !isNewCategory &&  categories.find(el => el.name === category).subcategories.map((elem, i) => (
+					{category && !isNewCategory && categories.length > 0 &&  categories.find(el => el.name === category).subcategories.map((elem, i) => (
 						<option
 						 key={i}
 						 selected={elem === subCategory}
@@ -109,12 +111,13 @@ function Category({ changeCategory, changeSubCategory, category, subCategory }) 
 				<label>
 					<p>Новая подкатегория?</p>
 					<input
+						checked={isNewSubCategory} 
 						disabled={!category}
 						type="checkbox"
 						onChange={toogleNewSubCategory}
 					/>
 				</label>	
-				{isNewSubCategory &&
+				{isNewSubCategory && category &&
 				<label>
 					<p>Новая подкатегория:</p>
 					<input 
