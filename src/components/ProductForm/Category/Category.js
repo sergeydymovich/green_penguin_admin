@@ -1,13 +1,21 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./Category.module.css";
-import { isExist, isExistValue } from "../../../utils/object.utils";
 
 function Category({ changeCategory, changeSubCategory, category, subCategory, isNewCategory, isNewSubCategory, setIsNewCategory, setIsNewSubCategory }) {
 
 	const categories = useSelector(state => state.categories.categoriesArr);
-	const [categoryExist, setCategoryExist] = useState(false);
-	const [subCategoryExist, setSubCategoryExist] = useState(false);
+	const [subCategories, setSubCategories] = useState([]);
+
+	useEffect(() => {
+
+		const categoryObj = categories.find(el => el.name === category);
+
+		if (categoryObj && categoryObj.subcategories.length > 0) {
+			setSubCategories(categoryObj.subcategories);
+		}
+
+	},[category, categories]);
 
 	const toogleNewCategory = () => {
 		setIsNewCategory(!isNewCategory);
@@ -24,21 +32,10 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 
 	const changeNewCategory = (e) => {
 		changeCategory(e.target.value);
-		setCategoryExist(false);
-		const isValid = isExist(e.target.value, categories);
-		if (isValid) {
-			setCategoryExist(true);
-		}
 	}
 
 	const changeNewSubCategory = (e) => {
 		changeSubCategory(e.target.value);
-		setSubCategoryExist(false);
-		const isValid = isExistValue(e.target.value, category, categories)
-
-		if (category && isValid) {			
-				setSubCategoryExist(true);
-		}
 	}
 
   return (
@@ -81,7 +78,6 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 						type="text"
 						onChange={changeNewCategory}
 					/>
-					{categoryExist &&<p className={styles.error}>Уже существует!</p>}
 				</label>
 				}		
 			</div>
@@ -98,7 +94,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 					>
 					не выбрана
 					</option> 
-					{category && !isNewCategory && categories.length > 0 &&  categories.find(el => el.name === category).subcategories.map((elem, i) => (
+					{subCategories.length > 0 && subCategories.map((elem, i) => (
 						<option
 						 key={i}
 						 selected={elem === subCategory}
@@ -124,7 +120,6 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 						type="text"
 						onChange={changeNewSubCategory}
 					/>
-					{subCategoryExist &&<p className={styles.error}>Уже существует!</p>}
 				</label>
 				}
 			</div>

@@ -25,33 +25,43 @@ function ProductForm() {
 	const [isNewSubCategory, setIsNewSubCategory] = useState(false);
 	const [image, setImage] = useState("");
 	const [description, setDescription] = useState("");
+	const [product, setProduct] = useState({}); 
 	const [id, setId] = useState("");
-	const [error, setError] = useState(false);
+	const [isValidProduct, setIsValidProduct] = useState(true);
 	const [succes, setSucces] = useState(false);
 	
 	const submitAddForm = (e) => {
 		e.preventDefault();
-		const obj = { name, volume, weight, price, category, subCategory, brand,	description, image }
 
-		axios.POST("/products", obj).then(res => {
-			setSucces(true);
-		}).catch(error =>  {
-			setError(true);
-		});
-	}
+		if (isValidProduct) {
+			axios.POST("/products", product).then(res => {
+				setName("");
+				setBrand("");
+				setVolume("");
+				setWeight("");
+				setPrice("");
+				setCategory("");
+				setSubCategory("");
+				setImage("");
+				setDescription("");
+				setId("");
+				setSucces(true);	
+			}).catch(error =>  {
+			});
+		}
+		}
+	
 
 	const submitChangeForm = (e) => {
 		e.preventDefault();
-		const obj = { name, volume, weight, price, category, subCategory, brand, description, image, _id: id }
 
-		axios.PUT("/products", obj).then(res => {
+		if (isValidProduct) {
+		axios.PUT("/products", product).then(res => {
 			setSucces(true);
 		}).catch(error =>  {
-			setError(true);
 		});
+		}
 	}
-
-	const product = { name, volume, weight, price, category, subCategory, brand, description, image, isPreview: true };
 
 	useEffect(() => {
 		if (location.state) {
@@ -69,6 +79,34 @@ function ProductForm() {
 			setId(product._id);		
 		}
 	},[]);
+
+	const validateProduct = () => {
+		if (name && (volume || weight) && price && category && brand && description && image) {
+			setIsValidProduct(true);
+		} else {
+			setIsValidProduct(false);
+		}
+	}
+
+	useEffect(() => {
+
+		setIsValidProduct(true);
+		setSucces(false);
+		setProduct({
+			name,
+			volume,
+			weight,
+			price,
+			category,
+			subCategory,
+			brand,
+			description,
+			image,
+			_id: id,
+			isPreview: true,
+		})
+
+	},[name, volume, weight, price, category, subCategory, brand, description, image])
 
   return (
 		<>
@@ -117,13 +155,13 @@ function ProductForm() {
 					</div>
 					<div className={styles.fourthColumn}>
 						<button
-							disabled={!name || (!volume && !weight) || !price || !category || !brand || !description || !image }
 							className={styles.button}
+							onClick={validateProduct}
 						>
 							 {location.state ? "Изменить" : "Добавить" }
 						</button>
 						{succes &&<p className={styles.succes}>Товар успешно {location.state ? "изменен!" : "добавлен!" }</p>}
-						{error &&<p className={styles.error}>Неудачно.Заполните все поля!</p>}
+						{!isValidProduct && <p className={styles.error}>Заполните все поля!</p>}
 					</div>			
 			</form>
     </div>
