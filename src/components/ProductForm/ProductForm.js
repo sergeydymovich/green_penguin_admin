@@ -31,6 +31,7 @@ function ProductForm() {
 	const [isValidProduct, setIsValidProduct] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [succes, setSucces] = useState(false);
+	const [err, setErr] = useState(false);
 	
 	const submitAddForm = (e) => {
 		e.preventDefault();
@@ -52,8 +53,9 @@ function ProductForm() {
 				setIsNewSubCategory(false);
 				setIsLoading(false);
 				setSucces(true);	
-			}).catch(error =>  {
+			}).catch(() =>  {
 				setIsLoading(false);
+				setErr(true);
 			});
 		}
 
@@ -70,6 +72,7 @@ function ProductForm() {
 			setIsLoading(false);
 		}).catch(error =>  {
 			setIsLoading(false);
+			setErr(true);
 		});
 		}
 	}
@@ -103,6 +106,7 @@ function ProductForm() {
 
 		setIsValidProduct(true);
 		setSucces(false);
+		setErr(false);
 		setProduct({
 			name,
 			volume,
@@ -173,6 +177,7 @@ function ProductForm() {
 						</button>}
 						{isLoading && <Loader />}
 						{succes &&<p className={styles.succes}>Товар успешно {location.state ? "изменен!" : "добавлен!" }</p>}
+						{err && <p className={styles.error}>Неудачно :(</p>}
 						{!isValidProduct && <p className={styles.error}>Заполните все поля!</p>}
 					</div>			
 			</form>

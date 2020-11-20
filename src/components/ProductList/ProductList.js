@@ -8,31 +8,42 @@ import Loader from "../Loader/Loader";
 function ProductList() {
 	const [products, setProducts] = useState([]);
 	const productsArr = useSelector(state => state.products.productsArr);
+	const filteredProductsArr = useSelector(state => state.filteredProducts.filteredArr);
+	const filterCategory = useSelector(state => state.filteredProducts.filterCategory);
 	const isLoadingProducts = useSelector(state => state.products.isLoading);
+	const isLoadingFilteredProducts = useSelector(state => state.filteredProducts.isLoading);
+	const isLoading = isLoadingProducts || isLoadingFilteredProducts;
 
 	useEffect(() => {
-		setProducts(productsArr)
-		console.log(products)
-	},[productsArr])
+		const currentProducts = filterCategory ? filteredProductsArr : productsArr;
+
+		setProducts(currentProducts);
+
+	},[productsArr, filteredProductsArr])
 
   return (
     <div className={styles.container}>
-			{isLoadingProducts &&
+			{isLoading &&
 			<div className={styles.loaderContainer}>
 				<Loader/>
 			</div>				 
 			}
-			{!isLoadingProducts && <div className={styles.btnContainer}>
-				<Link to="/form">
-					<button className={styles.btn}>Добавить товар</button>
-				</Link>	
-			</div>
-			}		
-			<ul className={styles.list}>
-			{products.map(product => (
+			{!isLoading && 
+			<>
+				<div className={styles.btnContainer}>
+					<Link to="/form">
+						<button className={styles.btn}>Добавить товар</button>
+					</Link>	
+				</div>
+				<ul className={styles.list}>
+				{products.map(product => (
 				<ProductItem product={product} />
-			))}
-			</ul>
+				))}
+				</ul>
+		 </>
+			}		
+	
+			
 			
     </div>
   );

@@ -1,8 +1,10 @@
-import { FILTER_CATEGORY, GET_FILTERED_PRODUCTS } from "../actions/filteredProducts";
+import { FILTER_CATEGORY, FILTER_SUBCATEGORY, GET_FILTERED_PRODUCTS, GET_FILTERED_PRODUCTS_REQUEST } from "../actions/filteredProducts";
 
 const INITIAL_STATE = {
 	filterCategory: "",
+	filterSubCategory: "",
 	filteredArr: [],
+	isLoading: false,
 };
 
 const filteredProducts = (state = INITIAL_STATE, action) => {
@@ -10,7 +12,13 @@ const filteredProducts = (state = INITIAL_STATE, action) => {
 	case FILTER_CATEGORY:
 		return {
 			...state,
-			filterWord: action.payload.category,
+			filterCategory: action.payload.category,
+			filteredArr: [],
+		};
+		case FILTER_SUBCATEGORY:
+		return {
+			...state,
+			filterSubCategory: action.payload.subCategory,
 			filteredArr: [],
 		};
 	case GET_FILTERED_PRODUCTS:
@@ -18,6 +26,11 @@ const filteredProducts = (state = INITIAL_STATE, action) => {
 			...state,
 			filteredArr: [...state.filteredArr, ...action.payload.products] || [],
 			isLoading: false,
+		};
+	case GET_FILTERED_PRODUCTS_REQUEST:
+		return {
+			...state,
+			isLoading: true,
 		};
 	default: 
 		return state;

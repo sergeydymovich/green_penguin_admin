@@ -1,26 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "./Navigation.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from "react-router-dom";
-import { getFilteredProducts } from "../../actions/filteredProducts";
+import { getFilteredProducts, changeCategory, changeSubCategory, getFilteredProductsRequest } from "../../actions/filteredProducts";
 import axios from "../../utils/axios.utils";
 
 function Navigation() {
 	const dispatch = useDispatch();
 	const categories = useSelector(state => state.categories.categoriesArr);
+	const category = useSelector(state => state.filteredProducts.filterCategory);
+	const subCategory = useSelector(state => state.filteredProducts.filterSubCategory);
 
-	const getProducts = (category, subCategory) => {
+	const handleSubCategory = (e, subCategory, category) => {
+		e.stopPropagation();
+		dispatch(changeSubCategory(subCategory));
+		dispatch(changeCategory(category))
+	}
 
-		console.log(category, subCategory)
-		axios.GET(`/products?category=${category}&subcategory=${subCategory}`).then((res) => {	
-			console.log(res.data.products)
-			dispatch(getFilteredProducts(res.data.products));			
-		}).catch(error =>  {
-			console.log(error);
-		});
+	const handleCategory = (category) => {
+		dispatch(changeCategory(category))
+		dispatch(changeSubCategory(""));
+	}
 
-
-	} 
+	useEffect(() => {
+		if (category) {
+			dispatch(getFilteredProductsRequest());
+			axios.GET(`/products?category=${category}&subcategory=${subCategory}`).then((res) => {	
+				console.log(res.data.products)
+				dispatch(getFilteredProducts(res.data.products));			
+			}).catch(error =>  {
+				console.log(error);
+			});
+		}
+		
+	},[category, subCategory])
 
 
 
@@ -28,18 +40,16 @@ function Navigation() {
     <div className={styles.container}>
 			<ul className={styles.nav}>
 			{categories && categories.map(categ => (
-				<Link to="/">
-					<li className={styles.item} onClick={() => getProducts(categ.name)}>
+					<li className={styles.item} onClick={() => handleCategory(categ.name)}>
 						<p className={styles.name}>{categ.name}</p>
 						<ul className={styles.subList}>
 						{categ.subcategories.map(sub => (
-							<li className={styles.subItem} onClick={() => getProducts(categ.name, sub)}>
+							<li className={styles.subItem} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
 								<p className={styles.subName}>{sub}</p>
 							</li>
 						))}
 						</ul>			
-					</li>
-				</Link>				
+					</li>			
 			))}	
 			</ul>
 			

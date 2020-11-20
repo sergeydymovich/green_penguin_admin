@@ -4,6 +4,9 @@
 
 .list {
 	list-style: none;
+	border: 1px solid #5f9e52;
+	padding: 20px;
+	background-color:  #5f9e52;
 }
 
 .btn {
