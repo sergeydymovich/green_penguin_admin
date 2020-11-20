@@ -19,7 +19,9 @@
 .brand,
 .volume,
 .price,
-.description {
+.description,
+.category,
+.subCategory {
 	margin-bottom: 10px;
 }
 

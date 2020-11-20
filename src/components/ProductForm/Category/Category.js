@@ -66,7 +66,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 				<label>
 					<p>Новая категория?</p>
 					<input
-					  
+					  checked={isNewCategory}
 						type="checkbox"
 						onChange={toogleNewCategory}
 					/>

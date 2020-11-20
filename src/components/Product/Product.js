@@ -12,11 +12,12 @@ function Product({ product }) {
 			<div className={styles.content}>
 				<img className={styles.image} src={product.image || noimg} alt="product-img" />
 				<div className={styles.info}>
-					<p>Категория: {product.category}</p>
-					<p>Подкатегория: {product.subCategory}</p>
+					<p className={styles.category}>Категория: {product.category}</p>
+					<p className={styles.subCategory}>Подкатегория: {product.subCategory}</p>
 					<p className={styles.brand}>Бренд: {product.brand}</p>			
-					<p className={styles.volume}>Вес/Объем: {product.volume || product.weight}{product.volume ? "мл": "гр"}</p>
-					<p className={styles.price}>Цена: {product.price} BYN/шт</p>
+					<p className={styles.volume}>Вес(гр): {product.weight}</p>
+					<p className={styles.volume}>Объем(мл): {product.volume}</p>
+					<p className={styles.price}>Цена(BYN/шт): {product.price}</p>
 					<p className={styles.description}>Описание: {product.description}</p>
 					<Link to={{
 						pathname: "/form",

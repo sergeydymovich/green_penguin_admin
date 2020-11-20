@@ -10,6 +10,7 @@ import Image from "./Image/Image";
 import Description from "./Description/Description";
 import ProductPreview from "../Product/Product";
 import { useLocation } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 function ProductForm() {
 
@@ -28,12 +29,14 @@ function ProductForm() {
 	const [product, setProduct] = useState({}); 
 	const [id, setId] = useState("");
 	const [isValidProduct, setIsValidProduct] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const [succes, setSucces] = useState(false);
 	
 	const submitAddForm = (e) => {
 		e.preventDefault();
-
+		
 		if (isValidProduct) {
+			setIsLoading(true);
 			axios.POST("/products", product).then(res => {
 				setName("");
 				setBrand("");
@@ -45,20 +48,28 @@ function ProductForm() {
 				setImage("");
 				setDescription("");
 				setId("");
+				setIsNewCategory(false);
+				setIsNewSubCategory(false);
+				setIsLoading(false);
 				setSucces(true);	
 			}).catch(error =>  {
+				setIsLoading(false);
 			});
 		}
+
 		}
 	
 
 	const submitChangeForm = (e) => {
 		e.preventDefault();
-
+		
 		if (isValidProduct) {
+			setIsLoading(true);
 		axios.PUT("/products", product).then(res => {
 			setSucces(true);
+			setIsLoading(false);
 		}).catch(error =>  {
+			setIsLoading(false);
 		});
 		}
 	}
@@ -154,12 +165,13 @@ function ProductForm() {
 						/>
 					</div>
 					<div className={styles.fourthColumn}>
-						<button
+						{!isLoading && <button
 							className={styles.button}
 							onClick={validateProduct}
 						>
 							 {location.state ? "Изменить" : "Добавить" }
-						</button>
+						</button>}
+						{isLoading && <Loader />}
 						{succes &&<p className={styles.succes}>Товар успешно {location.state ? "изменен!" : "добавлен!" }</p>}
 						{!isValidProduct && <p className={styles.error}>Заполните все поля!</p>}
 					</div>			
