@@ -1,12 +1,10 @@
 .container {
-	margin-top: 20px;
+	min-height: 70vh;
+	padding: 15px;
 }
 
 .list {
 	list-style: none;
-	border: 1px solid #5f9e52;
-	padding: 20px;
-	background-color:  #5f9e52;
 }
 
 .btn {
@@ -28,3 +26,4 @@
 	justify-content: center;
 	margin-top: 100px;
 }
+

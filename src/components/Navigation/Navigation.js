@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import styles from "./Navigation.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilteredProducts, changeCategory, changeSubCategory, getFilteredProductsRequest } from "../../actions/filteredProducts";
+import { getFilteredProducts, changeCategory, changeSubCategory, getFilteredProductsRequest, filteredProductsAmount } from "../../actions/filteredProducts";
+import { clearProducts } from "../../actions/products.actions";
 import axios from "../../utils/axios.utils";
 
 function Navigation() {
@@ -23,10 +24,11 @@ function Navigation() {
 
 	useEffect(() => {
 		if (category) {
+			dispatch(clearProducts());
 			dispatch(getFilteredProductsRequest());
 			axios.GET(`/products?category=${category}&subcategory=${subCategory}`).then((res) => {	
-				console.log(res.data.products)
-				dispatch(getFilteredProducts(res.data.products));			
+				dispatch(getFilteredProducts(res.data.products));
+				dispatch(filteredProductsAmount(res.data.count))			
 			}).catch(error =>  {
 				console.log(error);
 			});

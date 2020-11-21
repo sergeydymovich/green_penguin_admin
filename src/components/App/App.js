@@ -6,8 +6,8 @@ import ProductList from "../ProductList/ProductList";
 import ProductContainer from "../Product/ProductContainer";
 import styles from "./App.module.css";
 import axios from "../../utils/axios.utils.js";
-import { getProducts, getProductsRequest } from '../../actions/products.actions';
-import { useDispatch } from 'react-redux';
+import { getProducts, getProductsRequest, productsAmount } from '../../actions/products.actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories.actions';
 import {
 	BrowserRouter as Router,
@@ -17,12 +17,14 @@ import {
 
 function App() {
 const dispatch = useDispatch();
+const pageSize = useSelector(state => state.products.pageSize);
 
 	useEffect(() => {
 		dispatch(getProductsRequest());
 		
-		axios.GET("/products").then(res => {	
-			dispatch(getProducts(res.data.products));				
+		axios.GET(`/products?limit=${pageSize}`).then(res => {	
+			dispatch(getProducts(res.data.products));	
+			dispatch(productsAmount(res.data.count));		
 		}).catch(error =>  {
 			console.log(error);
 		});
@@ -34,7 +36,6 @@ const dispatch = useDispatch();
 		});
 	},[])
 	
- 
   return (
 		<Router>
 			<div className={styles.App}>
