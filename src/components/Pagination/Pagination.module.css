@@ -7,3 +7,9 @@
 	padding: 10px;
 	margin: 0 5px;
 }
+
+.active {
+	background-color: #5f9e52;
+	color: white;
+	outline: none;
+}

@@ -39,6 +39,8 @@ const filteredProducts = (state = INITIAL_STATE, action) => {
 			...state,
 			isLoading: true,
 			productsArr: [],
+			totalAmount: 0,
+			pages: 0,
 		};
 	case CLEAR_FILTER:
 	return {

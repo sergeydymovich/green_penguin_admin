@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 import { Link } from 'react-router-dom';
 import { clearFilter } from "../../actions/filteredProducts";
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, getProductsRequest, productsAmount } from '../../actions/products.actions';
+import { getProducts, getProductsRequest, productsAmount, clearProducts } from '../../actions/products.actions';
 import axios from "../../utils/axios.utils"; 
 
 
@@ -13,6 +13,7 @@ function Header() {
 
   const toHome = () => {
     dispatch(clearFilter());
+    dispatch(clearProducts());
     dispatch(getProductsRequest());
     axios.GET(`/products?limit=${pageSize}`).then(res => {	
       dispatch(getProducts(res.data.products));	
