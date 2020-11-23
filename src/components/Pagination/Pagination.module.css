@@ -1,15 +1,18 @@
 .pagination {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .pageBtn {
-	padding: 10px;
+	padding: 5px;
 	margin: 0 5px;
+	cursor: pointer;
 }
 
 .active {
 	background-color: #5f9e52;
 	color: white;
 	outline: none;
+	padding: 10px;
 }

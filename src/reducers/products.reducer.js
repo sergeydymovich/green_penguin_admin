@@ -3,7 +3,7 @@ import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, CL
 const INITIAL_STATE = {
 	productsArr: [],
 	isLoading: false,
-	pageSize: 8,
+	pageSize: 3,
 	totalAmount: 0,
 	pages: 0,
 };

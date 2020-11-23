@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 	productsArr: [],
 	isLoading: false,
 	totalAmount: 0,
-	pageSize: 8,
+	pageSize: 3,
 	pages: 0,
 };
 
