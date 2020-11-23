@@ -1,8 +1,11 @@
 import React, { useEffect, useState }  from 'react';
+import { useSelector } from "react-redux";
 import styles from "./Pagination.module.css";
 import cn from "classnames/bind";
 
-function Pagination({ pages, getMoreProducts, isLoading }) {
+function Pagination({ getMoreProducts, isLoading }) {
+
+const pages = useSelector(state => state.products.pages);	
 const [activePage, setActivePage] = useState(0);
 
 const handleClick = (index) => {

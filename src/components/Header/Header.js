@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from "./Header.module.css";
 import { Link } from 'react-router-dom';
-import { clearFilter } from "../../actions/filteredProducts";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, getProductsRequest, productsAmount, clearProducts } from '../../actions/products.actions';
 import axios from "../../utils/axios.utils"; 
@@ -12,9 +11,9 @@ function Header() {
   const pageSize = useSelector(state => state.products.pageSize);
 
   const toHome = () => {
-    dispatch(clearFilter());
     dispatch(clearProducts());
     dispatch(getProductsRequest());
+
     axios.GET(`/products?limit=${pageSize}`).then(res => {	
       dispatch(getProducts(res.data.products));	
       dispatch(productsAmount(res.data.count));		
@@ -22,8 +21,7 @@ function Header() {
       console.log(error);
     });
   }
-  
-  
+   
   return (
     <div className={styles.header}>
       <Link to="/">

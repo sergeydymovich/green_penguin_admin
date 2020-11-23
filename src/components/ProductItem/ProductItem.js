@@ -6,13 +6,10 @@ import noimg from "../../assets/noimg.svg";
 import { deleteProduct } from '../../actions/products.actions';
 import { useDispatch } from 'react-redux';
 
-
 function ProductItem({ product }) {
-
 	const dispatch = useDispatch();
 
 	const handleDelete = () => {
-
 		axios.DELETE("/products", { id: product._id }).then(() => {
 			dispatch(deleteProduct(product._id));
 		}).catch(error =>  {

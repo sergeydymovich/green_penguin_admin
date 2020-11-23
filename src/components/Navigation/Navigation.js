@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import styles from "./Navigation.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilteredProducts, changeCategory, changeSubCategory, getFilteredProductsRequest, filteredProductsAmount } from "../../actions/filteredProducts";
-import { clearProducts } from "../../actions/products.actions";
+import { getProducts, changeCategory, changeSubCategory, getProductsRequest, productsAmount, clearProducts } from "../../actions/products.actions";
 import axios from "../../utils/axios.utils";
 
 function Navigation() {
 	const dispatch = useDispatch();
 	const categories = useSelector(state => state.categories.categoriesArr);
-	const category = useSelector(state => state.filteredProducts.filterCategory);
-	const subCategory = useSelector(state => state.filteredProducts.filterSubCategory);
+	const category = useSelector(state => state.products.filterCategory);
+	const subCategory = useSelector(state => state.products.filterSubCategory);
+	const pageSize = useSelector(state => state.products.pageSize);
 
 	const handleSubCategory = (e, subCategory, category) => {
 		e.stopPropagation();
@@ -25,10 +25,11 @@ function Navigation() {
 	useEffect(() => {
 		if (category) {
 			dispatch(clearProducts());
-			dispatch(getFilteredProductsRequest());
-			axios.GET(`/products?category=${category}&subcategory=${subCategory}`).then((res) => {	
-				dispatch(getFilteredProducts(res.data.products));
-				dispatch(filteredProductsAmount(res.data.count))			
+			dispatch(getProductsRequest());
+
+			axios.GET(`/products?category=${category}&subcategory=${subCategory}&limit=${pageSize}`).then((res) => {	
+				dispatch(getProducts(res.data.products));
+				dispatch(productsAmount(res.data.count))			
 			}).catch(error =>  {
 				console.log(error);
 			});

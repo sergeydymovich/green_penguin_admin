@@ -1,7 +1,9 @@
-import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, CLEAR_PRODUCTS } from "../actions/products.actions";
+import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, CLEAR_PRODUCTS, FILTER_CATEGORY, FILTER_SUBCATEGORY } from "../actions/products.actions";
 
 const INITIAL_STATE = {
 	productsArr: [],
+	filterCategory: "",
+	filterSubCategory: "",
 	isLoading: false,
 	pageSize: 8,
 	totalAmount: 0,
@@ -33,11 +35,21 @@ const products = (state = INITIAL_STATE, action) => {
 			...state,
 			productsArr: [
 				...state.productsArr.filter(el => el._id !== action.payload.id)
-			]
+			],	
 		};
 	case CLEAR_PRODUCTS:
 		return {
 			...INITIAL_STATE
+		};
+	case FILTER_CATEGORY:
+		return {
+			...state,
+			filterCategory: action.payload.category,
+		};
+		case FILTER_SUBCATEGORY:
+		return {
+			...state,
+			filterSubCategory: action.payload.subCategory,
 		}; 		
 	default: 
 		return state;

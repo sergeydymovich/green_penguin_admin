@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import ProductItem from "../ProductItem/ProductItem";
 import Navigation from "../Navigation/Navigation";
 import styles from "./ProductList.module.css";
@@ -6,53 +6,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
-import { getProductsRequest, getProducts, productsAmount } from "../../actions/products.actions";
-import { getFilteredProductsRequest, getFilteredProducts, filteredProductsAmount } from "../../actions/filteredProducts";
+import { getProductsRequest, getProducts } from "../../actions/products.actions";
 import axios from "../../utils/axios.utils";
 
 function ProductList() {
 	const dispatch = useDispatch();
-	const [products, setProducts] = useState([]);
-	const productsArr = useSelector(state => state.products.productsArr);
-	const filteredProductsArr = useSelector(state => state.filteredProducts.productsArr);
-	const filterCategory = useSelector(state => state.filteredProducts.filterCategory);
-	const filterSubCategory = useSelector(state => state.filteredProducts.filterSubCategory);
+	const products = useSelector(state => state.products.productsArr);
+	const filterCategory = useSelector(state => state.products.filterCategory);
+	const filterSubCategory = useSelector(state => state.products.filterSubCategory);
 	const pageSize = useSelector(state => state.products.pageSize);
-	const pagesAmount = useSelector(state => state.products.totalAmount);
-	const filteredPagesAmount = useSelector(state => state.filteredProducts.totalAmount);
-	const pages = filterCategory ? Math.ceil(filteredPagesAmount/pageSize) : Math.ceil(pagesAmount/pageSize);
-	const isLoadingProducts = useSelector(state => state.products.isLoading);
-	const isLoadingFilteredProducts = useSelector(state => state.filteredProducts.isLoading);
-	const isLoading = isLoadingProducts || isLoadingFilteredProducts;
+	const isLoading = useSelector(state => state.products.isLoading);
 
 	const getMoreProducts = (page) => {
-
-		if (filterCategory) {
-			dispatch(getFilteredProductsRequest());
-		} else {
 			dispatch(getProductsRequest());
-		}
-		
+	
 		axios.GET(`/products?category=${filterCategory}&subcategory=${filterSubCategory}&limit=${pageSize}&offset=${page*pageSize}`).then(res => {	
-
-			if (filterCategory) {
-				dispatch(getFilteredProducts(res.data.products)); 
-				dispatch(filteredProductsAmount(res.data.count));
-			} else {
-				dispatch(getProducts(res.data.products)); 
-				dispatch(productsAmount(res.data.count));
-			}
-										
+				dispatch(getProducts(res.data.products)); 								
 		}).catch(error =>  {
 			console.log(error);
 		});
 
 	};
-
-	useEffect(() => {
-		const currentProducts = filterCategory ? filteredProductsArr : productsArr;
-		setProducts(currentProducts);
-	},[productsArr, filteredProductsArr])
 
   return (
 		<>
@@ -78,7 +52,7 @@ function ProductList() {
 		 </>
 			}	
     </div>
-		<Pagination  pages={pages} getMoreProducts={getMoreProducts} isLoading={isLoading} />
+		<Pagination getMoreProducts={getMoreProducts} isLoading={isLoading} />
 		</>
     
   );
