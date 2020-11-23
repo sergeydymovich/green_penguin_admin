@@ -22,6 +22,7 @@ function Size({changeVolume, changeWeight, volume, weight}) {
 					type="text"
 					onChange={validateVolume}
 					disabled={weight}
+					maxLength="6"
 				/>
 			</label>
 			<label>
@@ -31,6 +32,7 @@ function Size({changeVolume, changeWeight, volume, weight}) {
 					type="text" 
 					onChange={validateWeight} 
 					disabled={volume}
+					maxLength="6"
 				/>
 
 			</label>

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import ProductItem from "../ProductItem/ProductItem";
+import Navigation from "../Navigation/Navigation";
 import styles from "./ProductList.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
-import { getProductsRequest, getProducts } from "../../actions/products.actions";
-import { getFilteredProductsRequest, getFilteredProducts } from "../../actions/filteredProducts";
+import { getProductsRequest, getProducts, productsAmount } from "../../actions/products.actions";
+import { getFilteredProductsRequest, getFilteredProducts, filteredProductsAmount } from "../../actions/filteredProducts";
 import axios from "../../utils/axios.utils";
 
 function ProductList() {
@@ -36,8 +37,10 @@ function ProductList() {
 
 			if (filterCategory) {
 				dispatch(getFilteredProducts(res.data.products)); 
+				dispatch(filteredProductsAmount(res.data.count));
 			} else {
 				dispatch(getProducts(res.data.products)); 
+				dispatch(productsAmount(res.data.count));
 			}
 										
 		}).catch(error =>  {
@@ -53,6 +56,7 @@ function ProductList() {
 
   return (
 		<>
+		<Navigation />
 		<div className={styles.container}>
 			{isLoading &&
 			<div className={styles.loaderContainer}>
@@ -68,13 +72,13 @@ function ProductList() {
 				</div>
 					<ul className={styles.list}>
 					{products.map(product => (
-					<ProductItem product={product} />
+					<ProductItem key={product._id} product={product} />
 					))}
 					</ul>	
 		 </>
 			}	
     </div>
-		<Pagination  pages={pages} getMoreProducts={getMoreProducts} />
+		<Pagination  pages={pages} getMoreProducts={getMoreProducts} isLoading={isLoading} />
 		</>
     
   );

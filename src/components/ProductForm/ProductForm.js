@@ -61,7 +61,6 @@ function ProductForm() {
 
 		}
 	
-
 	const submitChangeForm = (e) => {
 		e.preventDefault();
 		
@@ -126,6 +125,7 @@ function ProductForm() {
   return (
 		<>
 		<div className={styles.container}>
+	<h1 className={styles.title}>{location.state ? "Редактирование товара" : "Добавление товара"}</h1>
 				<form onSubmit={location.state ? submitChangeForm : submitAddForm} className={styles.productForm}>
 					<div className={styles.firstColumn}>
 						<Name

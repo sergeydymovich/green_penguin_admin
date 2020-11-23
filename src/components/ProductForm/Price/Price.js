@@ -15,6 +15,7 @@ function Price({ changePrice, price }) {
 								value={price} 
 								type="text" 
 								onChange={handlePrice} 
+								maxLength="4"
 							/>
 		</label>
   );

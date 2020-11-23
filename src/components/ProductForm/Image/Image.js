@@ -4,8 +4,12 @@ function Image({ changeImage }) {
 
 	const choiseImg = (e) => {
 		let file    = e.target.files[0];
-			changeImage(file);
+		let reader  = new FileReader();
 
+		reader.onloadend = () => {
+			changeImage(reader.result);
+		};
+		reader.readAsDataURL(file);
 	};
 
   return (
@@ -14,7 +18,6 @@ function Image({ changeImage }) {
 				<input
 				onChange={choiseImg} 
 				type="file" 
-				name="image"
 				/>
 		</label>
   );

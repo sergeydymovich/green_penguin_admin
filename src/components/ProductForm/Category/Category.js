@@ -77,6 +77,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 					<input
 						type="text"
 						onChange={changeNewCategory}
+						maxLength="20"
 					/>
 				</label>
 				}		
@@ -119,6 +120,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 					<input 
 						type="text"
 						onChange={changeNewSubCategory}
+						maxLength="20"
 					/>
 				</label>
 				}

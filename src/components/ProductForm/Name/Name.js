@@ -9,6 +9,7 @@ function Name({changeName, name}) {
 								type="text"
 								value={name} 
 								onChange={(e) => changeName(e.target.value)}
+								maxLength="80"
 							/>
 						</label>
   );

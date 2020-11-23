@@ -42,11 +42,11 @@ function Navigation() {
     <div className={styles.container}>
 			<ul className={styles.nav}>
 			{categories && categories.map(categ => (
-					<li className={styles.item} onClick={() => handleCategory(categ.name)}>
+					<li className={styles.item} key={categ._id} onClick={() => handleCategory(categ.name)}>
 						<p className={styles.name}>{categ.name}</p>
 						<ul className={styles.subList}>
 						{categ.subcategories.map(sub => (
-							<li className={styles.subItem} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
+							<li className={styles.subItem} key={categ.id + sub} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
 								<p className={styles.subName}>{sub}</p>
 							</li>
 						))}

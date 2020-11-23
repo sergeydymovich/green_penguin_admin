@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
 import ProductForm from "../ProductForm/ProductForm";
 import ProductList from "../ProductList/ProductList";
 import ProductContainer from "../Product/ProductContainer";
@@ -40,7 +39,6 @@ const pageSize = useSelector(state => state.products.pageSize);
 		<Router>
 			<div className={styles.App}>
       <Header/>
-			<Navigation/>
 			<Switch>
 				<Route exact path="/" component={ProductList} />
 				<Route path="/product/:id" component={ProductContainer} />
