@@ -1,6 +1,7 @@
 import React, { useEffect, useState }  from 'react';
 import { useSelector } from 'react-redux';
 import styles from "./Category.module.css";
+import { validateSpaces } from "../../../utils/string.utils";
 
 function Category({ changeCategory, changeSubCategory, category, subCategory, isNewCategory, isNewSubCategory, setIsNewCategory, setIsNewSubCategory }) {
 
@@ -31,11 +32,13 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 	}
 
 	const changeNewCategory = (e) => {
-		changeCategory(e.target.value);
+		const validCategory = validateSpaces(e.target.value);
+		changeCategory(validCategory);
 	}
 
 	const changeNewSubCategory = (e) => {
-		changeSubCategory(e.target.value);
+		const validSubCategory = validateSpaces(e.target.value);
+		changeSubCategory(validSubCategory);
 	}
 
   return (

@@ -28,8 +28,9 @@ const pageSize = useSelector(state => state.products.pageSize);
 			console.log(error);
 		});
 
-		axios.GET("/categories").then(res => {	
-			dispatch(getCategories(res.data.categories));				
+		axios.GET("/categories").then(res => {
+			const {categories, brands} = res.data
+			dispatch(getCategories(categories, brands));				
 		}).catch(error =>  {
 			console.log(error);
 		});

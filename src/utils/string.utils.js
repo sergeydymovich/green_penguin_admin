@@ -5,3 +5,10 @@ export const validateNumber = (string) => {
 export const validatePrice = (string) => {
 	return string.replace(/[^.\d]+/g,"").replace( /^([^\.]*\.)|\./g, '$1' );
 }
+
+export const validateSpaces = (string) => {
+	console.log(string)
+	return string.replace(/ +/g, ' ').trim();
+}
+
+

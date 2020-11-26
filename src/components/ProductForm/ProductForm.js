@@ -132,15 +132,15 @@ function ProductForm() {
 						 changeName={setName}
 						 name={name}
 						/>
-						<Brand
-						 changeBrand={setBrand}
-						 brand={brand}
-						/>
 						<Size 
 						changeVolume={setVolume}
 						changeWeight={setWeight}
 						volume={volume}
 						weight={weight}
+						/>
+						<Brand
+						 changeBrand={setBrand}
+						 brand={brand}
 						/>
 					</div>
 					<div className={styles.secondColumn}>
