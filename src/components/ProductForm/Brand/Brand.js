@@ -1,37 +1,57 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styles from "./Brand.module.css";
+import styles from "../ProductForm.module.css";
 import { validateSpaces } from "../../../utils/string.utils";
 
-function Brand({changeBrand, brand}) {
-	const [isNewBrand, setIsNewBrand] = useState(false);
-	const brands = useSelector(state => state.categories.brandsArr);
+function Brand({ brand, update, isNewBrand, setIsNewBrand, category }) {
+	const categories = useSelector(state => state.categories.categoriesArr);
+	const [brands, setBrands] = useState([]);
 
 	const handleChange = (e) => {
 		const brand = validateSpaces(e.target.value);
-		changeBrand(brand);
+		update(e.target.name, brand.toLowerCase());
 	}
 
- const toogleCheckBox = () => {
-	changeBrand("");
-	setIsNewBrand(!isNewBrand)
- }
+	const toogleCheckBox = () => {
+		setIsNewBrand(!isNewBrand)
+		update("brand", "");
+	}
+
+ useEffect(() => {
+		const existCategoryObj = categories.find(el => el.name === category) || {};
+		const brandsArr = existCategoryObj.brands || [];
+		setBrands(brandsArr);
+ },[category])
 
 
   return (
     <div className={styles.brandContainer}>
 			<label>
 				Бренд:
-				<select onChange={(e) => changeBrand(e.target.value)} disabled={isNewBrand}>
-						<option selected={!brand}>не выбран</option>
-					{brands.map(el => (					
-						<option selected={brand === el.name}>{el.name}</option>
-					))}
+				<select 
+					onChange={(e) => update(e.target.name, e.target.value)}
+					name="brand"
+					disabled={isNewBrand}
+				>
+					<option
+					disabled
+					selected={!brand}
+					>
+						не выбран
+					</option>
+					{brands.length > 0 && brands.map(el => (
+						<option key={el} selected={el === brand}>{el}</option>
+					))					
+					}		
 				</select>
 			</label>
 			<label>
-				Новый бренд?
-				<input type="checkbox" onChange={() => toogleCheckBox()}/>
+				<p>Новый бренд?</p>
+				<input
+						type="checkbox"
+						checked={isNewBrand}
+						onChange={() => toogleCheckBox()}
+				/>
 			</label>
 			
 			{isNewBrand &&
@@ -39,6 +59,7 @@ function Brand({changeBrand, brand}) {
 				type="text"
 				onChange={(e) => handleChange(e)}
 				maxLength="50"
+				name="brand"
 			/>}			
 		</div>
   );

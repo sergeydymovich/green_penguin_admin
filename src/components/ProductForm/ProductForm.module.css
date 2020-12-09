@@ -8,6 +8,7 @@
 	text-align: center;
 	margin-bottom: 20px;
 	color: #5f9e52;
+	font-weight: 100;
 }
 
 .productForm {
@@ -63,3 +64,32 @@
 .thirdColumn {
 	padding: 5px;
 } 
+
+
+.imgContainer {
+	position: relative;
+}
+
+
+.fakeText {
+	position: absolute;
+	right: 26px;
+	bottom: 0;
+	background-color: white;
+	font-size: 14px;
+}
+
+.brandContainer {
+	width: 50%;
+	height: 50%;
+}
+
+.homeLink {
+	width: 300px;
+	border: 2px solid #5f9e52;
+	color: #5f9e52;
+	padding: 10px 20px;
+	margin-top: 20px;
+	font-size: 16px;
+	text-align: center;
+}

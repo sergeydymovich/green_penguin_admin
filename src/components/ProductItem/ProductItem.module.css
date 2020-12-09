@@ -1,21 +1,31 @@
 .item {
 	padding: 10px 0px;
-	border: 3px solid lightgray;
+	border: 1px solid #5f9e52;
 	margin-bottom: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
 	background-color: white;
+	height: 100px;
 }
 
 .image {
 	height: 50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.name {
+	color: #5f9e52;
+	font-weight: 500;
+	font-size: 17px;
 }
 
 .imageContainer {
 	display: flex;
 	justify-content: center;
 	width: 10%;
+	padding: 5px;
 }
 
 .nameContainer {
@@ -48,8 +58,9 @@
 }
 
 .deleteBtn {
-	background-color: goldenrod;
+	background-color: olivedrab;
 	padding: 5px;
 	border-radius: 5px;
 	color: white;
+	cursor: pointer;
 }

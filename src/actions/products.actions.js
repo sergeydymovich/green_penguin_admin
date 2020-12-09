@@ -2,9 +2,9 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCTS_REQUEST = "GET_PRODUCTS_REQUEST";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const PRODUCTS_AMOUNT = "PRODUCTS_AMOUNT";
-export const CLEAR_PRODUCTS = "CLEAR_PRODUCTS";
 export const FILTER_CATEGORY = "FILTER_CATEGORY";
 export const FILTER_SUBCATEGORY = "FILTER_SUBCATEGORY";
+export const CHANGE_ACTIVE_PAGE = "CHANGE_ACTIVE_PAGE";
 
 export const getProducts = (products) => (
 	{
@@ -19,10 +19,6 @@ export const getProductsRequest = () => ({
 	type: GET_PRODUCTS_REQUEST,
 });
 
-export const clearProducts = () => ({
-	type: CLEAR_PRODUCTS,
-});
-
 export const productsAmount = (amount) => (
 	{
 		type: PRODUCTS_AMOUNT,
@@ -31,6 +27,13 @@ export const productsAmount = (amount) => (
 		},
 	}
 );
+
+export const changeActivePage = (number) => ({
+	type: CHANGE_ACTIVE_PAGE,
+	payload: {
+		number
+	}
+})
 
 export const deleteProduct = (id) => (
 	{

@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, CLEAR_PRODUCTS, FILTER_CATEGORY, FILTER_SUBCATEGORY } from "../actions/products.actions";
+import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, FILTER_CATEGORY, FILTER_SUBCATEGORY, CHANGE_ACTIVE_PAGE } from "../actions/products.actions";
 
 const INITIAL_STATE = {
 	productsArr: [],
@@ -8,6 +8,7 @@ const INITIAL_STATE = {
 	pageSize: 8,
 	totalAmount: 0,
 	pages: 0,
+	activePage: 0,
 };
 
 const products = (state = INITIAL_STATE, action) => {
@@ -16,14 +17,18 @@ const products = (state = INITIAL_STATE, action) => {
 	return {
 		...state,
 		isLoading: true,
-		productsArr: [],
 	};
 	case GET_PRODUCTS:
 		return {
 			...state,
 			isLoading: false,
-			productsArr: [...action.payload.products ],
+			productsArr: [...action.payload.products],
 		};
+	case CHANGE_ACTIVE_PAGE:
+		return {
+			...state,
+			activePage: action.payload.number,
+		};	
 	case PRODUCTS_AMOUNT:
 	return {
 		...state,
@@ -37,19 +42,18 @@ const products = (state = INITIAL_STATE, action) => {
 				...state.productsArr.filter(el => el._id !== action.payload.id)
 			],	
 		};
-	case CLEAR_PRODUCTS:
-		return {
-			...INITIAL_STATE
-		};
 	case FILTER_CATEGORY:
 		return {
 			...state,
 			filterCategory: action.payload.category,
+			filterSubCategory: "",
+			activePage: 0,
 		};
 		case FILTER_SUBCATEGORY:
 		return {
 			...state,
 			filterSubCategory: action.payload.subCategory,
+			activePage: 0,
 		}; 		
 	default: 
 		return state;

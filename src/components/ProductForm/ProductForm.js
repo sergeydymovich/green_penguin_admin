@@ -11,47 +11,72 @@ import Description from "./Description/Description";
 import ProductPreview from "../Product/Product";
 import { useLocation } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getCategories } from '../../actions/categories.actions'; 
 
 function ProductForm() {
-
+	const dispatch = useDispatch();
 	const location = useLocation();
-	const [name, setName] = useState("");
-	const [brand, setBrand] = useState("");
-	const [volume, setVolume] = useState("");
-	const [weight, setWeight] = useState("");
-	const [price, setPrice] = useState("");
-	const [category, setCategory] = useState("");
-	const [subCategory, setSubCategory] = useState("");
 	const [isNewCategory, setIsNewCategory] = useState(false);
 	const [isNewSubCategory, setIsNewSubCategory] = useState(false);
-	const [image, setImage] = useState("");
-	const [description, setDescription] = useState("");
-	const [product, setProduct] = useState({}); 
-	const [id, setId] = useState("");
+	const [isNewBrand, setIsNewBrand] = useState(false);
 	const [isValidProduct, setIsValidProduct] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [succes, setSucces] = useState(false);
 	const [err, setErr] = useState(false);
+	const [form, setForm] = useState({
+		name: "",
+		brand: "",
+		volume: "",
+		weight: "",
+		price: "",
+		category: "",
+		subCategory: "",
+		image: "",
+		description: "",
+	})
+
+	const update = (name, value) => {
+		setIsValidProduct(true);
+		setSucces(false);
+    setForm({
+      ...form,
+      [name]: value
+    });
+  };
 	
 	const submitAddForm = (e) => {
 		e.preventDefault();
 		
 		if (isValidProduct) {
 			setIsLoading(true);
-			axios.POST("/products", product).then(res => {
-				setName("");
-				setBrand("");
-				setVolume("");
-				setWeight("");
-				setPrice("");
-				setCategory("");
-				setSubCategory("");
-				setImage("");
-				setDescription("");
-				setId("");
+			const formData = new FormData();
+
+			for (let key in form) {
+				if (key === "image") { 
+					formData.append(key, form[key], form[key].name)
+				} else {
+					formData.append(key, form[key])
+				}
+			}
+
+			axios.POST("/products", formData).then(res => {
+				setForm({
+					name: "",
+					brand: "",
+					volume: "",
+					weight: "",
+					price: "",
+					category: "",
+					subCategory: "",
+					image: "",
+					description: "",
+				});
 				setIsNewCategory(false);
 				setIsNewSubCategory(false);
-				setIsLoading(false);
+				setIsNewBrand(false)
+				setIsLoading(false);	
 				setSucces(true);	
 			}).catch(() =>  {
 				setIsLoading(false);
@@ -66,106 +91,86 @@ function ProductForm() {
 		
 		if (isValidProduct) {
 			setIsLoading(true);
-		axios.PUT("/products", product).then(res => {
-			setSucces(true);
-			setIsLoading(false);
-		}).catch(error =>  {
-			setIsLoading(false);
-			setErr(true);
-		});
-		}
+			const formData = new FormData();
+
+			for (let key in form) {
+				if (key === "image" && typeof(form[key]) === "object") { 
+					formData.append(key, form[key], form[key].name)
+				} else {
+					formData.append(key, form[key])
+				}			
+			}
+
+			axios.PUT("/products", formData).then(res => {
+				setSucces(true);
+				setIsLoading(false);
+			}).catch(error =>  {
+				setIsLoading(false);
+				setErr(true);
+			});
+			}
 	}
 
 	useEffect(() => {
 		if (location.state) {
-			const { product } = location.state;
-
-			setName(product.name);
-			setBrand(product.brand);
-			setVolume(product.volume);
-			setWeight(product.weight);
-			setPrice(product.price);
-			setCategory(product.category);
-			setSubCategory(product.subCategory);
-			setImage(product.image);
-			setDescription(product.description);
-			setId(product._id);		
+			const { name, brand, volume, weight, price, category, subCategory, image, description, _id} = location.state.product;
+			setForm({ name, brand, volume, weight, price, category, subCategory, image, description, _id: _id || ""})
 		}
 	},[]);
 
 	const validateProduct = () => {
-		if (name && (volume || weight) && price && category && brand && description && image) {
+		if (form.name && (form.volume || form.weight) && form.price && form.category && form.brand  && form.image) {
 			setIsValidProduct(true);
 		} else {
 			setIsValidProduct(false);
 		}
 	}
 
-	useEffect(() => {
-
-		setIsValidProduct(true);
-		setSucces(false);
-		setErr(false);
-		setProduct({
-			name,
-			volume,
-			weight,
-			price,
-			category,
-			subCategory,
-			brand,
-			description,
-			image,
-			_id: id,
-			isPreview: true,
-		})
-
-	},[name, volume, weight, price, category, subCategory, brand, description, image])
-
   return (
 		<>
 		<div className={styles.container}>
-	<h1 className={styles.title}>{location.state ? "Редактирование товара" : "Добавление товара"}</h1>
-				<form onSubmit={location.state ? submitChangeForm : submitAddForm} className={styles.productForm}>
+				<form onSubmit={location.state ? submitChangeForm : submitAddForm}  className={styles.productForm}>
 					<div className={styles.firstColumn}>
 						<Name
-						 changeName={setName}
-						 name={name}
+						 update={update}
+						 name={form.name}
 						/>
 						<Size 
-						changeVolume={setVolume}
-						changeWeight={setWeight}
-						volume={volume}
-						weight={weight}
+						update={update}
+						volume={form.volume}
+						weight={form.weight}
 						/>
-						<Brand
-						 changeBrand={setBrand}
-						 brand={brand}
-						/>
+						<Price
+							update={update}
+							price={form.price} 
+						/>		
 					</div>
 					<div className={styles.secondColumn}>
-						<Price
-							changePrice={setPrice}
-							price={price} 
-						/>
 						<Category
-							changeCategory={setCategory}
-							changeSubCategory={setSubCategory}
-							category={category}
-							subCategory={subCategory}
+							update={update}
+							category={form.category}
+							subCategory={form.subCategory}
 							isNewCategory={isNewCategory}
 							isNewSubCategory={isNewSubCategory}
 							setIsNewCategory={setIsNewCategory}
 							setIsNewSubCategory={setIsNewSubCategory}
+						/>
+						<Brand
+							brand={form.brand}
+							update={update}
+							setIsNewBrand={setIsNewBrand}
+							isNewBrand={isNewBrand}
+							category={form.category}
 						/>			
 					</div>		
 					<div className={styles.thirdColumn}>
 						<Image
-						 changeImage={setImage}
+						 update={update}
+						 image={form.image}
 						/>
 						<Description
-						 changeDescription={setDescription}
-						 description={description}
+						 update={update}
+						 description={form.description}
 						/>
 					</div>
 					<div className={styles.fourthColumn}>
@@ -182,7 +187,10 @@ function ProductForm() {
 					</div>			
 			</form>
     </div>
-		<ProductPreview product={product} />
+		<ProductPreview product={{...form, isPreview: true}} />
+		<Link to="/">
+				<p className={styles.homeLink} onClick={() => dispatch(getCategories([]))}> ⟵ вернуться к товарам</p>
+		</Link>
 		</>  
   );
 }

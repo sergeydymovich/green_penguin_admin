@@ -1,6 +1,16 @@
-.image {
+.imgContainer {
 	max-width: 300px;
-	max-height: 500px;
+	max-height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 100%;
 }
 
 .content {
@@ -9,11 +19,14 @@
 
 .product {
 	padding: 50px;
-	border: 1px solid #5f9e52;
+	border-bottom: 2px solid #5f9e52;
+	border-top: 2px solid #5f9e52;
+	margin-top: 20px;
 }
 
 .info {
 	padding: 30px;
+	max-width: 60%;
 }
 
 .brand,
@@ -32,4 +45,10 @@
 	background-color: #5f9e52;
 	color: white;
 	font-size: 20px;
+	cursor: pointer;
+}
+
+.title {
+	font-weight: 500;
+	margin-bottom: 10px;
 }

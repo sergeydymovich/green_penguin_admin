@@ -3,42 +3,42 @@ import { useSelector } from 'react-redux';
 import styles from "./Category.module.css";
 import { validateSpaces } from "../../../utils/string.utils";
 
-function Category({ changeCategory, changeSubCategory, category, subCategory, isNewCategory, isNewSubCategory, setIsNewCategory, setIsNewSubCategory }) {
+function Category({ update, category, subCategory, isNewCategory, isNewSubCategory, setIsNewCategory, setIsNewSubCategory }) {
 
 	const categories = useSelector(state => state.categories.categoriesArr);
 	const [subCategories, setSubCategories] = useState([]);
 
 	useEffect(() => {
-
 		const categoryObj = categories.find(el => el.name === category);
 
 		if (categoryObj && categoryObj.subcategories.length > 0) {
 			setSubCategories(categoryObj.subcategories);
 		}
-
+		if (!category) {
+			update("subCategory", "");
+		}
+		
 	},[category, categories]);
 
 	const toogleNewCategory = () => {
 		setIsNewCategory(!isNewCategory);
 		setIsNewSubCategory(false);
-		changeCategory("");
-		changeSubCategory("");
-
+		update("category", "");
 	}
 	const toogleNewSubCategory = () => {
 		setIsNewSubCategory(!isNewSubCategory)
-		changeSubCategory("")
+		update("subCategory", "");
 
 	}
 
 	const changeNewCategory = (e) => {
 		const validCategory = validateSpaces(e.target.value);
-		changeCategory(validCategory);
+		update("category", validCategory.toLowerCase());
 	}
 
 	const changeNewSubCategory = (e) => {
 		const validSubCategory = validateSpaces(e.target.value);
-		changeSubCategory(validSubCategory);
+		update("subCategory", validSubCategory.toLowerCase());
 	}
 
   return (
@@ -48,7 +48,7 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 					<p>Категория:</p>
 					<select 
 						disabled={isNewCategory}
-						onChange={(e) => changeCategory(e.target.value)}
+						onChange={(e) => update("category", e.target.value)}
 					>
 					<option 
 						disabled
@@ -76,11 +76,10 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 				</label>
 				{isNewCategory &&
 				<label>
-					<p>Новая категория:</p>
 					<input
 						type="text"
 						onChange={changeNewCategory}
-						maxLength="20"
+						maxLength="30"
 					/>
 				</label>
 				}		
@@ -89,12 +88,12 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 				<label>
 					<p>Подкатегория:</p>
 					<select
-						disabled={isNewSubCategory || isNewCategory}
-						onChange={(e) => changeSubCategory(e.target.value)}
+						disabled={isNewSubCategory || isNewCategory || !category}
+						onChange={(e) => update("subCategory", e.target.value)}
 					>	
 					<option 
 						disabled
-						selected={!subCategory}
+						selected={!subCategory || !category}
 					>
 					не выбрана
 					</option> 
@@ -119,19 +118,15 @@ function Category({ changeCategory, changeSubCategory, category, subCategory, is
 				</label>	
 				{isNewSubCategory && category &&
 				<label>
-					<p>Новая подкатегория:</p>
 					<input 
 						type="text"
 						onChange={changeNewSubCategory}
-						maxLength="20"
+						maxLength="30"
 					/>
 				</label>
 				}
 			</div>
 		</div>
-		
-		
-
   );
 }
 

@@ -13,23 +13,19 @@ const get = (path) => (
 
 const post = (path, body) => (
 	axios({
-		headers: {
-			"Content-Type": "application/json",
-		},
+		headers: {},
 		method: "post",
 		url: API_BASE + path,
-		data: body ? JSON.stringify(body) : undefined,
+		data: body,
 	})
 );
 
 const put = (path, body) => (
 	axios({
-		headers: {
-			"Content-Type": "application/json",
-		},
+		headers: {},
 		method: "put",
 		url: API_BASE + path,
-		data: body ? JSON.stringify(body) : undefined,
+		data: body,
 	})
 );
 

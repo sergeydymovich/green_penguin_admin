@@ -2,7 +2,7 @@ import React  from 'react';
 import styles from "./ProductItem.module.css";
 import axios from "../../utils/axios.utils.js";
 import { Link } from "react-router-dom";
-import noimg from "../../assets/noimg.svg";
+import noimg from "../../assets/noimg.png";
 import { deleteProduct } from '../../actions/products.actions';
 import { useDispatch } from 'react-redux';
 
@@ -22,10 +22,10 @@ function ProductItem({ product }) {
 			<li className={styles.item}>
 				<Link className={styles.link} to={`/product/${product._id}`} >
 					<div className={styles.imageContainer}>
-						<img className={styles.image} src={product.image || noimg} alt="product-img" />
+						<img className={styles.image} src={product.image ? `http://localhost:5000/${product.image}` : noimg} alt="product-img" />
 					</div>
 					<div className={styles.nameContainer}>
-						<h4>{product.name}</h4>
+						<h4 className={styles.name}>{product.name}</h4>
 					</div>
 					<div className={styles.otherInfoContainer}>
 						<p className={styles.brand}>{product.brand}</p>			

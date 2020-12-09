@@ -1,23 +1,16 @@
-import React, { useEffect, useState }  from 'react';
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { changeActivePage } from "../../actions/products.actions";
 import styles from "./Pagination.module.css";
 import cn from "classnames/bind";
 
-function Pagination({ getMoreProducts, isLoading }) {
-
-const pages = useSelector(state => state.products.pages);	
-const [activePage, setActivePage] = useState(0);
+function Pagination({ isLoading }) {
+const dispatch = useDispatch();
+const {pages, activePage} = useSelector(state => state.products);	
 
 const handleClick = (index) => {
-		setActivePage(index);
-		getMoreProducts(index);
+		dispatch(changeActivePage(index));
 	}
-
-	useEffect(() => {
-		return () => {
-			setActivePage(0);
-		}
-	},[pages])
 
   return (
 		<div className={styles.pagination}>	

@@ -1,50 +1,40 @@
 import React, {useEffect} from 'react';
 import styles from "./Navigation.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts, changeCategory, changeSubCategory, getProductsRequest, productsAmount, clearProducts } from "../../actions/products.actions";
+import { changeCategory, changeSubCategory } from "../../actions/products.actions";
+import { getCategories } from "../../actions/categories.actions";
 import axios from "../../utils/axios.utils";
 
 function Navigation() {
 	const dispatch = useDispatch();
 	const categories = useSelector(state => state.categories.categoriesArr);
-	const category = useSelector(state => state.products.filterCategory);
-	const subCategory = useSelector(state => state.products.filterSubCategory);
-	const pageSize = useSelector(state => state.products.pageSize);
 
 	const handleSubCategory = (e, subCategory, category) => {
 		e.stopPropagation();
-		dispatch(changeSubCategory(subCategory));
 		dispatch(changeCategory(category))
+		dispatch(changeSubCategory(subCategory));	
 	}
 
 	const handleCategory = (category) => {
 		dispatch(changeCategory(category))
-		dispatch(changeSubCategory(""));
 	}
 
 	useEffect(() => {
-		if (category) {
-			dispatch(clearProducts());
-			dispatch(getProductsRequest());
-
-			axios.GET(`/products?category=${category}&subcategory=${subCategory}&limit=${pageSize}`).then((res) => {	
-				dispatch(getProducts(res.data.products));
-				dispatch(productsAmount(res.data.count))			
+		if (!categories.length) {
+			axios.GET("/categories").then(res => {
+				dispatch(getCategories(res.data.categories));				
 			}).catch(error =>  {
 				console.log(error);
-			});
-		}
-		
-	},[category, subCategory])
-
-
+			});	
+		}		
+},[categories])
 
   return (
     <div className={styles.container}>
 			<ul className={styles.nav}>
 			{categories && categories.map(categ => (
 					<li className={styles.item} key={categ._id} onClick={() => handleCategory(categ.name)}>
-						<p className={styles.name}>{categ.name}</p>
+						<p className={styles.name}>{categ.name.toUpperCase()}</p>
 						<ul className={styles.subList}>
 						{categ.subcategories.map(sub => (
 							<li className={styles.subItem} key={categ.id + sub} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
@@ -54,8 +44,7 @@ function Navigation() {
 						</ul>			
 					</li>			
 			))}	
-			</ul>
-			
+			</ul>	
     </div>
   );
 }

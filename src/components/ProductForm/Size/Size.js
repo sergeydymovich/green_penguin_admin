@@ -1,16 +1,15 @@
 import React  from 'react';
-import Price from '../Price/Price';
 import { validateNumber } from "../../../utils/string.utils";
 
-function Size({changeVolume, changeWeight, volume, weight}) {
+function Size({update, volume, weight}) {
 
 	const validateVolume = (e) => {
 		const volume = validateNumber(e.target.value);
-		changeVolume(volume);
+		update(e.target.name, volume);
 	}
 	const validateWeight = (e) => {
 		const weight = validateNumber(e.target.value);
-		changeWeight(weight);
+		update(e.target.name, weight);
 	}
 
   return (
@@ -23,6 +22,7 @@ function Size({changeVolume, changeWeight, volume, weight}) {
 					onChange={validateVolume}
 					disabled={weight}
 					maxLength="6"
+					name="volume"
 				/>
 			</label>
 			<label>
@@ -33,8 +33,8 @@ function Size({changeVolume, changeWeight, volume, weight}) {
 					onChange={validateWeight} 
 					disabled={volume}
 					maxLength="6"
+					name="weight"
 				/>
-
 			</label>
 		</>
   );

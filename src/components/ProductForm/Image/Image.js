@@ -1,24 +1,22 @@
 import React  from 'react';
+import styles from "../ProductForm.module.css"
 
-function Image({ changeImage }) {
+function Image({ update, image }) {
 
 	const choiseImg = (e) => {
 		let file    = e.target.files[0];
-		let reader  = new FileReader();
-
-		reader.onloadend = () => {
-			changeImage(reader.result);
-		};
-		reader.readAsDataURL(file);
+		update(e.target.name, file);
 	};
 
   return (
-		<label>
+		<label className={styles.imgContainer}>
 				<p>Изображение:</p>
 				<input
 				onChange={choiseImg} 
 				type="file" 
+				name="image"
 				/>
+				{!image &&<p className={styles.fakeText}>Файл не выбран</p>}
 		</label>
   );
 }

@@ -1,17 +1,18 @@
 import React  from 'react';
 
-function Name({changeName, name}) {
+function Name({update, name}) {
 
   return (
     <label>
-							<p>Название:</p>
-								<input 
-								type="text"
-								value={name} 
-								onChange={(e) => changeName(e.target.value)}
-								maxLength="80"
-							/>
-						</label>
+			<p>Название:</p>
+				<input 
+				type="text"
+				value={name} 
+				onChange={(e) => update(e.target.name, e.target.value)}
+				maxLength="80"
+				name="name"
+			/>
+		</label>
   );
 }
 
