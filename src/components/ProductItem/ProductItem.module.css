@@ -49,6 +49,10 @@
 	width: 33%;
 }
 
+.brand {
+	text-transform: capitalize;
+}
+
 .link {
 	text-decoration: none;
 	color: black;

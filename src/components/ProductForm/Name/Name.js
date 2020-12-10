@@ -9,7 +9,7 @@ function Name({update, name}) {
 				type="text"
 				value={name} 
 				onChange={(e) => update(e.target.name, e.target.value)}
-				maxLength="80"
+				maxLength="100"
 				name="name"
 			/>
 		</label>

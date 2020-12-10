@@ -40,7 +40,7 @@ function ProductList() {
 				<Loader/>
 			</div>				 
 			}
-			{!isLoading && !productsArr.length && <p>по вашему запросу товары не найдены...</p>}
+			{!isLoading && !productsArr.length && <p>товары не найдены...</p>}
 			{!isLoading && 	
 			<ul className={styles.list}>
 			{productsArr.map(product => (
