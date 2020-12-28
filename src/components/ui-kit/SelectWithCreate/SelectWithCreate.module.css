@@ -1,0 +1,33 @@
+.errorText {
+	font-size: 11px;
+	color: red;
+}
+
+.errorInput {
+	border-color: red;
+}
+
+.select {
+	padding: 5px;
+	border-radius: 5px;
+	border: 1.5px solid lightgray;
+}
+
+.checkBox {
+	display: flex;
+	align-items: center;
+}
+
+.wrapper {
+	display: flex;
+}
+
+.newValueInput {
+	padding: 6px;
+	border-radius: 5px;
+	border: solid 1.5px lightgray;
+}
+
+.newValueContainer {
+	margin-left: 30px;
+}

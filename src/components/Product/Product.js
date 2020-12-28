@@ -2,51 +2,75 @@ import React, { useEffect, useState } from 'react';
 import styles from "./Product.module.css";
 import { Link } from 'react-router-dom';
 import noimg from "../../assets/noimg.png";
+import { useLocation } from "react-router-dom";
 
-function Product({ product }) {
+function Product({ product, isPreview }) {
+	const location = useLocation();
+	const [productItem, setProductItem] = useState({});
 	const [image, setImage] = useState("");
-
 	useEffect(() => {
-		if (typeof(product.image) === "object") {
-			const img    = product.image;
-			const reader  = new FileReader();
 
+		if (productItem.image && typeof(productItem.image[0]) === "object" ) {
+			const img = productItem.image[0];
+			const reader  = new FileReader();
 			reader.onloadend = () => {
 				setImage(reader.result);
 			};
 			reader.readAsDataURL(img);
 		}
 
-		if (product.image && typeof(product.image) === "string") {
-				setImage(`http://localhost:5000/${product.image}`)
+		if (productItem.image && typeof(productItem.image) === "string") {
+				setImage(`http://localhost:5000/${productItem.image}`)
 		} else {
 			setImage(noimg)
 		}
-	},[product.image]);
+	},[productItem.image]);
+
+
+
+
+	
+	
+	useEffect(() => {
+		const { state } = location;
+
+		if (state && state.product && !product) {
+			setProductItem(location.state.product)
+		} 
+		if (product) {
+			setProductItem(product);
+		}
+			
+	},[product, location.state]);
+
+
+
+
+
 
   return (
 		<>
 		<div className={styles.product}>
-			<h2 className={styles.title}>Название: {product.name}</h2>
+			<h2 className={styles.title}>Название: {productItem.name}</h2>
 			<div className={styles.content}>
 				<div className={styles.imgContainer}>
 					<img className={styles.image} src={image} alt="product-img" />
 				</div>	
 				<div className={styles.info}>
-					<p className={styles.category}>Категория: {product.category}</p>
-					<p className={styles.subCategory}>Подкатегория: {product.subCategory}</p>
-					<p className={styles.brand}>Бренд: {product.brand}</p>			
-					<p className={styles.volume}>Вес(гр): {product.weight}</p>
-					<p className={styles.volume}>Объем(мл): {product.volume}</p>
-					<p className={styles.price}>Цена(BYN/шт): {product.price}</p>
-					<p className={styles.description}>Описание: {product.description}</p>
+					<p className={styles.category}>Категория: {productItem.category}</p>
+					<p className={styles.subCategory}>Подкатегория: {productItem.subCategory}</p>
+					<p className={styles.brand}>Бренд: {productItem.brand}</p>			
+					<p className={styles.volume}>Вес(гр): {productItem.weight}</p>
+					<p className={styles.volume}>Объем(мл): {productItem.volume}</p>
+					<p className={styles.price}>Цена(BYN/шт): {productItem.price}</p>
+					<p className={styles.description}>Описание: {productItem.description}</p>
 					<Link to={{
 						pathname: "/form",
 						state: { 
-							product, 
+							product: productItem, 
 						}
 					}}>
-					{!product.isPreview && <button className={styles.btn}>Редактировать товар</button>}
+					{!isPreview && <button className={styles.btn}>Редактировать товар</button>}
 					</Link>						
 				</div>		
 			</div>		

@@ -20,7 +20,14 @@ function ProductItem({ product }) {
   return (
 		
 			<li className={styles.item}>
-				<Link className={styles.link} to={`/product/${product._id}`} >
+				<Link
+					className={styles.link}
+					to={{
+						pathname: "/product",
+						state: { 
+							product, 
+						}
+					}}>
 					<div className={styles.imageContainer}>
 						<img className={styles.image} src={product.image ? `http://localhost:5000/${product.image}` : noimg} alt="product-img" />
 					</div>

@@ -1,0 +1,15 @@
+.errorText {
+	font-size: 11px;
+	color: red;
+}
+
+.errorInput {
+	border-color: red;
+}
+
+.input {
+	padding: 5px;
+	width: 50%;
+	border-radius: 5px;
+	border: 1.5px solid lightgray;
+}

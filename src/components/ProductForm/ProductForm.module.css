@@ -11,79 +11,6 @@
 	font-weight: 100;
 }
 
-.productForm {
-	display: flex;
-	justify-content: space-around;
-	min-height: 300px;
-	border: 1px solid #5f9e52;
-	padding: 20px;
-}
-
-.succes {
-	color: green;
-	position: absolute;
-	bottom: 0;
-}
-.error {
-	color: darkgoldenrod;
-	position: absolute;
-	bottom: 0;
-}
-
-.button {
-	width: 100px;
-	height: 50px;
-	border-radius: 5px;
-	background-color: #5f9e52;
-	color: white;
-	font-size: 20px;
-}
-
-.firstColumn {
-	width: 20%;
-}
-
-.secondColumn {
-	width: 30%;
-}
-
-.thirdColumn {
-	width: 30%;
-}
-
-.fourthColumn {
-	width: 20%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-}
-
-.firstColumn, 
-.secondColumn, 
-.thirdColumn {
-	padding: 5px;
-} 
-
-
-.imgContainer {
-	position: relative;
-}
-
-
-.fakeText {
-	position: absolute;
-	right: 26px;
-	bottom: 0;
-	background-color: white;
-	font-size: 14px;
-}
-
-.brandContainer {
-	width: 50%;
-	height: 50%;
-}
-
 .homeLink {
 	width: 300px;
 	border: 2px solid #5f9e52;
@@ -92,4 +19,38 @@
 	margin-top: 20px;
 	font-size: 16px;
 	text-align: center;
+}
+
+.fieldsContainer {
+	display: flex;
+	height: 230px;
+}
+
+.leftColumn,
+.centerColumn,
+.rightColumn {
+	width: 33%;
+}
+
+.formFooter {
+	display: flex;
+	justify-content: center;
+	height: 100px;
+	align-items: center;
+}
+
+.submitBtn {
+	padding: 10px;
+	border-radius: 5px;
+	color: white;
+	background-color: #5f9e52;
+	font-size: 15px;
+}
+
+.description {
+	padding: 10px;
+	width: 100%;
+	height: 50%;
+	border-radius: 5px;
+	border: 1px solid lightgray;
 }
