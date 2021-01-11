@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { changeActivePage } from "../../actions/products.actions";
+import { changeActivePage, getPagesCount } from "../../actions/products.actions";
 import styles from "./Pagination.module.css";
 import cn from "classnames/bind";
 
 function Pagination({ isLoading }) {
 const dispatch = useDispatch();
-const {pages, activePage} = useSelector(state => state.products);	
+const {pages, activePage, totalAmount, pageSize} = useSelector(state => state.products);	
 
 const handleClick = (index) => {
 		dispatch(changeActivePage(index));
+		dispatch(getPagesCount(Math.ceil(totalAmount/pageSize)))
 	}
 
   return (

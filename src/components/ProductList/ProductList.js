@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import Pagination from "../Pagination/Pagination";
-import { getProductsRequest, getProducts, productsAmount } from "../../actions/products.actions";
+import { getProductsRequest, getProducts, getProductsAmount, getPagesCount } from "../../actions/products.actions";
 import axios from "../../utils/axios.utils";
 
 function ProductList() {
@@ -19,7 +19,8 @@ function ProductList() {
 		axios.GET(`/products?category=${filterCategory}&subcategory=${filterSubCategory}&limit=${pageSize}&offset=${activePage*pageSize}`).then(res => {	
 			const {products, count} = res.data;
 				dispatch(getProducts(products));
-				dispatch(productsAmount(count)) 								
+				dispatch(getProductsAmount(count))
+				dispatch(getPagesCount(Math.ceil(count/pageSize))) 								
 		}).catch(error =>  {
 			console.log(error);
 		});

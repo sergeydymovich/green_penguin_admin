@@ -26,11 +26,6 @@ function Product({ product, isPreview }) {
 		}
 	},[productItem.image]);
 
-
-
-
-	
-	
 	useEffect(() => {
 		const { state } = location;
 
@@ -42,11 +37,6 @@ function Product({ product, isPreview }) {
 		}
 			
 	},[product, location.state]);
-
-
-
-
-
 
   return (
 		<>

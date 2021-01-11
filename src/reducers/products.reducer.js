@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, PRODUCTS_AMOUNT, FILTER_CATEGORY, FILTER_SUBCATEGORY, CHANGE_ACTIVE_PAGE } from "../actions/products.actions";
+import { GET_PRODUCTS, DELETE_PRODUCT, GET_PRODUCTS_REQUEST, GET_PRODUCTS_AMOUNT, FILTER_CATEGORY, FILTER_SUBCATEGORY, CHANGE_ACTIVE_PAGE , GET_PAGES_COUNT } from "../actions/products.actions";
 
 const INITIAL_STATE = {
 	productsArr: [],
@@ -29,12 +29,16 @@ const products = (state = INITIAL_STATE, action) => {
 			...state,
 			activePage: action.payload.number,
 		};	
-	case PRODUCTS_AMOUNT:
+	case GET_PRODUCTS_AMOUNT:
 	return {
 		...state,
-		totalAmount: action.payload.amount,
-		pages: Math.ceil(action.payload.amount/state.pageSize)
+		totalAmount: action.payload.amount,		
 	};
+	case GET_PAGES_COUNT:
+		return {
+			...state,
+			pages: action.payload.count,
+		};
 	case DELETE_PRODUCT:
 		return {
 			...state,
