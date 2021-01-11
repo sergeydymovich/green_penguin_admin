@@ -20,7 +20,7 @@ const handleClick = (index) => {
 					className={styles.prev}
 					onClick={() => handleClick(activePage - 1)}
 				>
-					prev
+					предыдущая
 				</button>
 				}
 				{activePage > 0 && 
@@ -81,7 +81,7 @@ const handleClick = (index) => {
 					className={styles.next}
 					onClick={() => handleClick(activePage + 1)}
 				>
-					next		 
+					следующая		 
 				</button>
 				}						
 				
