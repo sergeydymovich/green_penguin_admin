@@ -29,7 +29,7 @@ const SelectWithCreate = (props) => {
 			</div>
 			<div className={styles.newValueContainer}>
 				<label className={styles.checkBox}>
-						<p>new?</p>
+						<p className={styles.label}>new {label}?</p>
 						<input
 							type="checkbox"
 							onChange={() => setShowInput(!showInput)}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./ProductForm.module.css";
 import InputWithLabel from "../ui-kit/InputWithLabel/InputWithLabel";
 import SelectWithCreate from "../ui-kit/SelectWithCreate/SelectWithCreate";
@@ -32,6 +32,8 @@ function ProductForm() {
 		{}
 	});
 	const [isLoading, setIsLoading] = useState(false);
+	const [succesRequest, setSuccesRequest] = useState(false);
+	const [error, setError] = useState(false);
 	const categories = useSelector(state => state.categories.categoriesArr);
 	const watchFields = watch(["name", "volume", "weight", "price", "category", "subCategory", "brand", "image", "description"]);
 	const image = watchFields.image && watchFields.image.length  ? watchFields.image : location.state?.product.image;
@@ -65,20 +67,23 @@ function ProductForm() {
 			formData.append("_id", product._id)
 			axios.PUT("/products", formData).then(res => {
 				setIsLoading(false);
+				setSuccesRequest(true);
 			}).catch(() =>  {
 				setIsLoading(false);
+				setError(true);
 			});
 		} else {
 			axios.POST("/products", formData).then(res => {
 				e.target.reset();
 				setIsLoading(false);
+				setSuccesRequest(true);
 			}).catch(() =>  {
 				setIsLoading(false);
+				setError(true);
 			});
-		}
-
-	
+		}	
 	}
+
 
   return (
 		<>
@@ -180,6 +185,8 @@ function ProductForm() {
 					</div>
 					<div className={styles.formFooter}>
 					{!isLoading && <button className={styles.submitBtn} type="submit">Отправить</button>}
+					{succesRequest && <p className={styles.succes}>Товар успешно {location.state ? "изменен" : "добавлен"}!</p>}
+					{error && <p className={styles.error}>неудачно</p>}
 					{isLoading && <Loader />}	
 					</div>
 						

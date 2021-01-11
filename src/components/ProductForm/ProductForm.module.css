@@ -37,6 +37,7 @@
 	justify-content: center;
 	height: 100px;
 	align-items: center;
+	flex-direction: column;
 }
 
 .submitBtn {
@@ -45,6 +46,7 @@
 	color: white;
 	background-color: #5f9e52;
 	font-size: 15px;
+	margin-bottom: 10px;
 }
 
 .description {
@@ -53,4 +55,12 @@
 	height: 50%;
 	border-radius: 5px;
 	border: 1px solid lightgray;
+}
+
+.succes {
+	color: #5f9e52;
+}
+
+.error {
+	color: red;
 }

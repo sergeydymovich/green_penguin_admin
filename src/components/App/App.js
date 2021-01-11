@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Header from "../Header/Header";
 import ProductForm from "../ProductForm/ProductForm";
 import ProductList from "../ProductList/ProductList";
@@ -8,7 +8,6 @@ import { Switch, Route } from "react-router-dom";
 
 
 function App() {
-useEffect(() => { document.title = "Green Penguin Admin" })
 
   return (
 			<div className={styles.App}>
