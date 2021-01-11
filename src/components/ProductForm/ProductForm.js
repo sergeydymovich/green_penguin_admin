@@ -38,7 +38,7 @@ function ProductForm() {
 	const watchFields = watch(["name", "volume", "weight", "price", "category", "subCategory", "brand", "image", "description"]);
 	const image = watchFields.image && watchFields.image.length  ? watchFields.image : location.state?.product.image;
 	const activeCategory = categories.find(category => category.name === watchFields.category);
-
+	
 	const onSubmit = (data, e) => {
 
 		setIsLoading(true);

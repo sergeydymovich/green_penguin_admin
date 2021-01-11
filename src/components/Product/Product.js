@@ -11,17 +11,15 @@ function Product({ product, isPreview }) {
 	useEffect(() => {
 
 		if (productItem.image && typeof(productItem.image[0]) === "object" ) {
-			const img = productItem.image[0];
-			const reader  = new FileReader();
-			reader.onloadend = () => {
-				setImage(reader.result);
-			};
-			reader.readAsDataURL(img);
+			const img = URL.createObjectURL(productItem.image[0]);			
+			setImage(img);
 		}
 
 		if (productItem.image && typeof(productItem.image) === "string") {
 				setImage(`http://localhost:5000/${productItem.image}`)
-		} else {
+		} 
+
+		if (!productItem.image) {
 			setImage(noimg)
 		}
 	},[productItem.image]);
