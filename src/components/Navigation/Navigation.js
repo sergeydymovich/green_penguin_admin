@@ -34,11 +34,15 @@ function Navigation() {
 			<ul className={styles.nav}>
 			{categories && categories.map(categ => (
 					<li className={styles.item} key={categ._id} onClick={() => handleCategory(categ.name)}>
-						<p className={styles.name}>{categ.name.toUpperCase()}</p>
+						<button className={styles.categoryBtn}>
+							<p className={styles.name}>{categ.name}</p>
+						</button>		
 						<ul className={styles.subList}>
 						{categ.subcategories.map(sub => (
 							<li className={styles.subItem} key={categ.id + sub} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
-								<p className={styles.subName}>{sub}</p>
+								<button className={styles.subCategoryBtn}>
+									<p className={styles.subName}>{sub}</p>
+								</button>			
 							</li>
 						))}
 						</ul>			
