@@ -1,5 +1,4 @@
 .item {
-	padding: 10px 0px;
 	border: 1px solid #5f9e52;
 	margin-bottom: 10px;
 	display: flex;
@@ -10,7 +9,6 @@
 }
 
 .image {
-	height: 50px;
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -26,6 +24,8 @@
 	justify-content: center;
 	width: 10%;
 	padding: 5px;
+	height: 100%;
+	align-items: center;
 }
 
 .nameContainer {
@@ -59,6 +59,7 @@
 	display: flex;
 	width: 90%;
 	align-items: center;
+	height: 100%;
 }
 
 .deleteBtn {

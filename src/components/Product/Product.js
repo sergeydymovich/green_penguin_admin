@@ -8,6 +8,7 @@ function Product({ product, isPreview }) {
 	const location = useLocation();
 	const [productItem, setProductItem] = useState({});
 	const [image, setImage] = useState("");
+	
 	useEffect(() => {
 
 		if (productItem.image && typeof(productItem.image[0]) === "object" ) {
@@ -16,7 +17,7 @@ function Product({ product, isPreview }) {
 		}
 
 		if (productItem.image && typeof(productItem.image) === "string") {
-				setImage(`http://localhost:5000/${productItem.image}`)
+				setImage(productItem.image)
 		} 
 
 		if (!productItem.image) {
@@ -45,9 +46,9 @@ function Product({ product, isPreview }) {
 					<img className={styles.image} src={image} alt="product-img" />
 				</div>	
 				<div className={styles.info}>
-					<p className={styles.category}>Категория: {productItem.category}</p>
-					<p className={styles.subCategory}>Подкатегория: {productItem.subCategory}</p>
-					<p className={styles.brand}>Бренд: {productItem.brand}</p>			
+					<p className={styles.category}>Категория: {productItem.newCategory || productItem.category}</p>
+					<p className={styles.subCategory}>Подкатегория: {productItem.newSubCategory || productItem.subCategory}</p>
+					<p className={styles.brand}>Бренд: {productItem.newBrand || productItem.brand}</p>			
 					<p className={styles.volume}>Вес(гр): {productItem.weight}</p>
 					<p className={styles.volume}>Объем(мл): {productItem.volume}</p>
 					<p className={styles.price}>Цена(BYN/шт): {productItem.price}</p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from "./ProductForm.module.css";
 import InputWithLabel from "../ui-kit/InputWithLabel/InputWithLabel";
 import SelectWithCreate from "../ui-kit/SelectWithCreate/SelectWithCreate";
@@ -31,59 +31,59 @@ function ProductForm() {
 		:
 		{}
 	});
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [succesRequest, setSuccesRequest] = useState(false);
 	const [error, setError] = useState(false);
 	const categories = useSelector(state => state.categories.categoriesArr);
-	const watchFields = watch(["name", "volume", "weight", "price", "category", "subCategory", "brand", "image", "description"]);
-	const image = watchFields.image && watchFields.image.length  ? watchFields.image : location.state?.product.image;
+	const brands = useSelector(state => state.categories.brandsArr);
+	const watchFields = watch(["name", "volume", "weight", "price", "category", "subCategory", "brand", "newCategory", "newSubCategory", "newBrand", "image", "description"]);
+	const image = watchFields.image  ? watchFields.image : location.state?.product.image;
 	const activeCategory = categories.find(category => category.name === watchFields.category);
-	
+	const hideInputs = location.state ? false : succesRequest;
+
 	const onSubmit = (data, e) => {
 
 		setIsLoading(true);
 		const formData = new FormData();
 
-		for (let key in data) {
-			if (key === "image" && watchFields.image) { 
+		if (watchFields.image?.length) {
+			formData.append("image", data["image"][0], data["image"][0].name)
+		} 
 
-				if (watchFields.image.length) {
-					formData.append(key, data[key][0], data[key][0].name)
-				} else {
-					formData.append(key, product?.image || "")
-				}	
-			} else {
-
-				if (data[key] === undefined) {
-					formData.append(key, "")
-				} else {
-						formData.append(key, data[key])
-				}
-				
-			}
-		}
+		formData.append("name", data["name"]);
+		formData.append("price", data["price"]);
+		formData.append("description", data["description"]);
+		formData.append("category", data["newCategory"] ? data["newCategory"].toLowerCase() : data["category"].toLowerCase());
+		formData.append("subCategory", data["newSubCategory"] ? data["newSubCategory"].toLowerCase() : data["subCategory"].toLowerCase());
+		formData.append("brand", data["newBrand"] ? data["newBrand"] : data["brand"]);
+		data["volume"] ? formData.append("volume", data["volume"]) : formData.append("weight", data["weight"]);
+		
 
 		if (location.state) {
 			formData.append("_id", product._id)
 			axios.PUT("/products", formData).then(res => {
 				setIsLoading(false);
 				setSuccesRequest(true);
+				setTimeout(() => setSuccesRequest(false), 3000);
 			}).catch(() =>  {
 				setIsLoading(false);
 				setError(true);
+				setTimeout(() => setError(false), 3000);
 			});
 		} else {
 			axios.POST("/products", formData).then(res => {
 				e.target.reset();
 				setIsLoading(false);
 				setSuccesRequest(true);
+				setTimeout(() => setSuccesRequest(false), 3000);
 			}).catch(() =>  {
 				setIsLoading(false);
 				setError(true);
+				setTimeout(() => setError(false), 3000);
 			});
 		}	
 	}
-
 
   return (
 		<>
@@ -137,13 +137,15 @@ function ProductForm() {
 						</div>
 						<div className={styles.centerColumn}>
 							<SelectWithCreate 
-								values={categories.map(category => category.name)}
+								values={categories.map(category => ( { name: category.name, _id: category._id }) )}
 								register={register}
 								label="Категория"
 								name="category"
 								errors={errors}
 								required
-							/>
+								newValueName="newCategory"
+								hideInput={hideInputs}
+								/>
 
 							<SelectWithCreate 
 								values={activeCategory?.subcategories || []}
@@ -151,16 +153,19 @@ function ProductForm() {
 								label="Подкатегория"
 								name="subCategory"
 								errors={errors}
-								required
+								newValueName="newSubCategory"
+								hideInput={hideInputs}
 							/>
 
 							<SelectWithCreate 
-								values={activeCategory?.brands || []}
+								values={brands}
 								register={register}
 								label="Бренд"
 								name="brand"
 								errors={errors}
 								required
+								newValueName="newBrand"
+								hideInput={hideInputs}
 							/>
 						</div>
 						<div className={styles.rightColumn}>

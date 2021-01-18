@@ -30,7 +30,8 @@
 }
 
 .newValueContainer {
-	margin-left: 30px;
+	width: 100%;
+	padding: 0px 30px;
 }
 
 .label {

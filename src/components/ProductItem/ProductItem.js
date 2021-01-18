@@ -29,7 +29,7 @@ function ProductItem({ product }) {
 						}
 					}}>
 					<div className={styles.imageContainer}>
-						<img className={styles.image} src={product.image ? `http://localhost:5000/${product.image}` : noimg} alt="product-img" />
+						<img className={styles.image} src={product.image ? product.image : noimg} alt="product-img" />
 					</div>
 					<div className={styles.nameContainer}>
 						<h4 className={styles.name}>{product.name}</h4>

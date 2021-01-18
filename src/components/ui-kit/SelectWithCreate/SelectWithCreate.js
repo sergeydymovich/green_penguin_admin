@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./SelectWithCreate.module.css";
 
 const SelectWithCreate = (props) => {
@@ -7,29 +7,39 @@ const SelectWithCreate = (props) => {
     register,
     errors,
 		name,
-		disabled,
 		label,
 		required,
+		newValueName,
+		hideInput,
 	} = props;
 	const [showInput, setShowInput] = useState(false);
+
+	useEffect(() => {
+		setShowInput(false);
+	},[hideInput])
 
   return (
 		<div className={styles.wrapper}> 
 			<div className={styles.selectContainer}>
 				<p>{label}</p>
-				<select ref={register({required})} className={styles.select} defaultValue="" name={name} disabled={showInput} >
-					<option value="">не выбран(а)</option>
-					{values.map(value => (
-						<option key={value}>
-							{value}
+				<select
+					ref={register({required: !showInput})}
+					className={styles.select}
+					name={name}
+					disabled={showInput}
+				>
+					<option selected value="">не выбран(а)</option>
+					{values.map(el => (
+						<option value={el.name} key={label + el._id}>
+							{el.name}
 						</option>
 					))}
 				</select>
-				{!disabled && !showInput && errors[name] && errors[name].type === "required" && <p className={styles.errorText}>поле обязательно к заполнению</p>}
+				{!showInput && errors[name] && errors[name].type === "required" && <p className={styles.errorText}>поле обязательно к заполнению</p>}
 			</div>
 			<div className={styles.newValueContainer}>
 				<label className={styles.checkBox}>
-						<p className={styles.label}>new {label}?</p>
+						<p className={styles.label}>новый(ая)?</p>
 						<input
 							type="checkbox"
 							onChange={() => setShowInput(!showInput)}
@@ -39,11 +49,11 @@ const SelectWithCreate = (props) => {
 				<label>
 					<input
 						ref={register({required})}
-						name={name}
+						name={newValueName}
 						maxLength="30"
 						className={styles.newValueInput}
 					/>
-					{!disabled && errors[name] && errors[name].type === "required" && <p className={styles.errorText}>поле обязательно к заполнению</p>}
+					{errors[newValueName] && errors[newValueName].type === "required" && <p className={styles.errorText}>поле обязательно к заполнению</p>}
 				</label>
 				}
 			</div>

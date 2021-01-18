@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styles from "./Navigation.module.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { changeCategory, changeSubCategory } from "../../actions/products.actions";
-import { getCategories } from "../../actions/categories.actions";
+import { getCategories, getBrands } from "../../actions/categories.actions";
 import axios from "../../utils/axios.utils";
 
 function Navigation() {
@@ -20,14 +20,21 @@ function Navigation() {
 	}
 
 	useEffect(() => {
-		if (!categories.length) {
-			axios.GET("/categories").then(res => {
-				dispatch(getCategories(res.data.categories));				
-			}).catch(error =>  {
-				console.log(error);
-			});	
-		}		
-},[categories])
+		
+		axios.GET("/categories").then(res => {
+			dispatch(getCategories(res.data.categories));				
+		}).catch(error =>  {
+			console.log(error);
+		});	
+
+		
+		axios.GET("/brands").then(res => {	
+			const { brands } = res.data;
+			dispatch(getBrands(brands));							
+		}).catch(error =>  {
+			console.log(error);
+		});
+},[])
 
   return (
     <div className={styles.container}>
@@ -39,9 +46,9 @@ function Navigation() {
 						</button>		
 						<ul className={styles.subList}>
 						{categ.subcategories.map(sub => (
-							<li className={styles.subItem} key={categ.id + sub} onClick={(e) => handleSubCategory(e, sub, categ.name)}>
+							<li className={styles.subItem} key={categ._id + sub._id} onClick={(e) => handleSubCategory(e, sub.name, categ.name)}>
 								<button className={styles.subCategoryBtn}>
-									<p className={styles.subName}>{sub}</p>
+									<p className={styles.subName}>{sub.name}</p>
 								</button>			
 							</li>
 						))}
